@@ -1,0 +1,158 @@
+{% extends 'dashbord/base.html' %}
+{% block content %}
+{% load static %}
+<style type="text/css">
+text-decoration: none; color: rgb(16, 112, 224);"
+
+
+.card.signal {
+    float: left;
+    overflow-y: auto;
+    height: 650px;
+}
+
+.card.listing {
+    float: left;
+    overflow-y: auto;
+    height: 650px;
+}
+
+
+</style>
+
+            <div class="btcwdgt-chart"></div>
+            <div class="btcwdgt-price"></div>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+
+                            <div class="header">
+                                <h4 class="title"> Bitcoin Statistics</h4>
+                                <p class="category">current price </p>
+                            </div>
+                            <div class="content">
+                               <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currencyid="1" data-base="USD" data-secondary="USD" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-clock-o"></i> got update every 10 secend
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                      <!--  <div class="card">
+                            <div class="header">
+                                <h4 class="title">market Behavior</h4>
+                               <p class="category">{{ crypto.market_status }}</p> 
+                            </div> -->
+                            <div class="content">
+                                 <!-- video id="bgVideo" width="650" height="335" autoplay loop muted>
+                                    <source src="{% static 'dashboard/ETH.mp4' %}" higeht type="video/mp4"> -->
+                                    <!-- TradingView Widget BEGIN -->
+                                    <div class="tradingview-widget-container">
+                                      <div id="tradingview_99272"></div>
+                                      <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/BINANCE-BTCUSDT/" rel="noopener" target="_blank"><span class="blue-text">BTCUSDT chart</span></a> by TradingView</div>
+                                      <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                                      <script type="text/javascript">
+                                      new TradingView.widget(
+                                      {
+                                      "width": 650,
+                                      "height": 360,
+                                      "symbol": "BINANCE:BTCUSDT",
+                                      "interval": "D",
+                                      "timezone": "Etc/UTC",
+                                      "theme": "Light",
+                                      "style": "1",
+                                      "locale": "en",
+                                      "toolbar_bg": "#f1f3f6",
+                                      "enable_publishing": false,
+                                      "allow_symbol_change": true,
+                                      "container_id": "tradingview_99272"
+                                    }
+                                      );
+                                      </script>
+                                    </div>
+                                    <!-- TradingView Widget END --> 
+                               <!-- <div class="footer">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> LOOK at it morty we r fuked
+
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <br>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                     
+                    <div class="signal col-md-6">
+                        <div class="card signal" id="Hold">
+                            <div class="header">
+                                <h4 class="title">Signels</h4>
+                                <p class="category">wanna make some money </p>
+                            </div> 
+                            {% for i in signels %} 
+                            <div class="content">
+                                <script type="text/javascript" src="{% static 'dashboard/currency.js' %}"></script><div class="coinmarketcap-currency-widget" data-currencyid="{{ i.signal_id }}" data-base="USD" data-secondary="" data-ticker="false" data-rank="false" data-marketcap="false" data-volume="false" data-stats="USD" data-statsticker="false"></div>
+
+                                <div class="footer" id="legend">
+                                    <div class="legend">
+                                        <b class="buy">buy</b>:{{ i.buy }} ,  &nbsp;
+                                        <b class="sell">sell</b>: {{i.sell}},  &nbsp;
+                                        <b class="stop loss">stop loss</b>: {{ i.stop_loss }}
+                                    </div>
+                                    <hr>
+                                
+                                    <div class="stats">
+                                        <i class="fa fa-check"></i> LONG TERM 
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+
+                     <div class="signal col-md-6">
+                        <div class="card listing">
+                            <div class="header">
+                                <h4 class="title">Coin listings</h4>
+                                <p class="category">recently listed coins</p>
+                            </div> 
+                            {% for s in listing %} 
+                            <div class="content">
+                                <script type="text/javascript" src="{% static 'dashboard/currency.js' %}"></script><div class="coinmarketcap-currency-widget" data-currencyid="{{s.coin_id}}" data-base="USD" data-secondary="" data-ticker="false" data-rank="false" data-marketcap="false" data-volume="false" data-stats="USD" data-statsticker="false"></div>
+
+                                <div class="footer">
+                                    <div class="legend" >
+                                      <b class="listed">{{s.coin}}</b> got listed in <b>{{s.exchange}}</b> &nbsp; &nbsp;
+                                      <b class="date">Date</b>: {{s.date}}  &nbsp;
+                                    </div>
+                                    <hr>
+                                
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </video>
+        </div>
+        </div>
+    
+          {% endblock %}
+
+
+
+    

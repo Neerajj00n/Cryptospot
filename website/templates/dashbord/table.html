@@ -1,0 +1,230 @@
+{% extends 'dashbord/base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+    color: orange;
+}
+
+
+span.stars, span.stars span {
+    display: block;
+    background: url(stars.png) 0 -16px repeat-x;
+    width: 80px;
+    height: 16px;
+}
+
+span.stars span {
+    background-position: 0 0;
+
+}
+
+button.btn.btn-info.btn-fill {
+    padding: 7px 18px;
+}
+
+.hello {
+    padding: 10px;
+    display: none;
+    width: 250px;
+}
+
+</style>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Airdrops</h4>
+                                <p class="category">Join new airdrops</p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <th>logo</th>
+                                    	<th>Name</th>
+                                    	<th>value</th>
+                                    	<th>ratings</th>
+                                    	<th>status</th>
+                                        <th>Join</th>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in airdrop %}
+                                        <tr>
+                                        	
+                                            <td><image src="{{i.logo.url}}" height="50" width="50" ></td>
+                                        	<td>{{i.Coin_name}}</td>
+                                        	<td>${{i.value}}</td>
+
+                                            <td>
+
+                                            {% if i.ratings == 1 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star "></span>
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span> 
+
+                                            {% elif i.ratings == 2 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span>
+                                            {% elif i.ratings == 3 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span>
+                                            {% elif i.ratings == 4 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star "></span>
+                                            {% elif i.ratings == 5 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            {% elif i.ratings <= 0 %}
+                                                <p>n/a</p>
+
+                                            {% endif %}
+                                            </td>
+                                            
+                                        	<td>{{i.status}}</td>
+                                            <td>
+                                               <button class="btn btn-info btn-fill" id="xyz" type="button">Join</button> 
+                                            </td>
+                                            <div class="hello" >
+                                          <tbody>                                        
+                                            <tr> <p> {{i.details | urlize }} </p> </tr>
+
+                                        </tbody>
+                                        </div>
+
+                                
+
+                                        </tr> 
+
+                                     
+                                        </tbody>
+
+                                   
+                                        {% endfor %}
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    
+
+</script>
+
+ 
+
+<script> 
+$("#xyz").click(function(){
+      var xyz = $(this).val();
+      $('.hello').slideToggle("slow");
+});
+     
+</script>
+
+
+<script> 
+$.fn.stars = function() {
+    return $(this).each(function() {
+        // Get the value
+        var val = parseFloat($(this).html());
+        // Make sure that the value is in 0 - 5 range, multiply to get width
+        var size = Math.max(0, (Math.min(5, val))) * 16;
+        // Create stars holder
+        var $span = $('<span />').width(size);
+        // Replace the numerical value with stars
+        $(this).html($span);
+    });
+}
+
+</script>
+<script type="text/javascript">
+    
+
+$(function() {
+    $('span.stars').stars();
+});
+
+</script>
+
+  {% endblock %}
+
+
+  [
+  {
+    "symbol_id": "BITSTAMP_SPOT_BTC_USD",
+    "exchange_id": "BITSTAMP",
+    "symbol_type": "SPOT",
+    "asset_id_base": "BTC",
+    "asset_id_quote": "USD"
+  },
+  {
+    "symbol_id": "BITMEX_FTS_BTC_USD_170630",
+    "exchange_id" : "BITMEX",
+    "symbol_type": "FUTURES",
+    "future_delivery_time": "2017-06-30T10:00:00.000000Z"
+    "asset_id_base": "BTC",
+    "asset_id_quote": "USD",
+  },
+  {
+    "symbol_id": "DERIBIT_OPT_BTC_USD_170331_500_P",
+    "exchange_id": "DERIBIT",
+    "symbol_type": "OPTION",
+    "option_type_is_call": false,
+    "option_strike_price": 500.0,
+    "option_contract_unit": 1,
+    "option_exercise_style": "EUROPEAN",
+    "option_expiration_time": "2017-03-31T10:00:00.000000Z",
+    "asset_id_base": "BTC",
+    "asset_id_quote": "USD"
+  }
+]
+  
+
+  <script type="text/javascript">
+      onst https = require('https');
+
+var options = {
+  "method": "GET",
+  "hostname": "rest.coinapi.io",
+  "path": "/v1/symbols",
+  "headers": {'X-CoinAPI-Key': '24105F55-FF66-41FC-971C-862F5D66DEE6'}
+};
+
+var request = https.request(options, function (response) {
+  var chunks = [];
+  response.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+});
+
+request.end();
+
+  </script>
+

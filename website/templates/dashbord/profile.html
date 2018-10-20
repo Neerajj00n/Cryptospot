@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class= show>
+<h2>{{ user.username }}</h2>
+<ul>
+  <li>Username: {{ user.username }}</li>
+  <li>BIO : {{ user.profile.bio }}
+  <li>Location: {{ user.profile.location }}</li>
+  <li>Profile pic: {{ user.profile.propic }}</li>  
+
+</ul>
+
+ <form method="post" enctype="multipart/form-data" action="{% url 'profile' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+
+</body>
+</html>
