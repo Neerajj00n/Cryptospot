@@ -14,8 +14,12 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from dashboard.models import * 
 import requests
-from django.core.mail import send_mail, BadHeaderError , EmailMessage 
+from django.core.mail import send_mail, BadHeaderError , EmailMessage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
 from notifications.signals import notify
+import requests
+import json
+
 # Create your views here.
 
 conf =  Configration.objects.all()
@@ -65,7 +69,42 @@ def dashbord(request):
 	listing = Coin_listings.objects.all()
 	dash = "Dashboard"
 
-#	noti = notify.send(user, recipient=user, verb='you reached level 10')
+
+	uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY="
+
+	api = "a502c1f3-72e0-407a-aa7e-ece644776306"
+
+	url = uri + api
+
+	raw_data = requests.get(url).json()
+
+	data = raw_data['data']
+
+	for i in signel:
+		if i.signal_id == 0:
+			coin = i.symbol.upper()
+			for sym in data:
+				if coin in sym['symbol']:
+					ids = sym['id']
+					i.signal_id = ids
+					i.save()
+				else: 
+					pass
+		else:
+			pass
+
+	for s in listing:
+		if s.coin_id == 0:
+			lst = s.cymbol.upper()
+			for sig in data:
+				if lst in sig['symbol']:
+					ide = sig['id']
+					s.coin_id = ide
+					s.save()
+				else: 
+					pass
+		else:
+			pass
 
 
 	return render(request, "dashbord/dashbord.html", {"crypto": crypt , "signels" : reversed(signel), "listing": reversed(listing), "header": dash }) #'order': order }) 
@@ -73,7 +112,22 @@ def dashbord(request):
 
 def blogs(request):
 	crypt = Dashconf.objects.get()
-	blogs = Blog.objects.all()
+	contact_list = Blog.objects.all()
+
+	paginator = Paginator(contact_list, 2) # Show 25 contacts per page
+
+	page = request.GET.get('page')
+
+	try:
+    		blogs = paginator.page(page)
+	except PageNotAnInteger:
+        	# If page is not an integer, deliver first page.
+    		blogs = paginator.page(1)
+	except EmptyPage:
+        	# If page is out of range (e.g. 9999), deliver last page of results.
+    		blogs = paginator.page(paginator.num_pages)
+
+	
 	return render(request, "dashbord/blogs.html", {"crypto": crypt, "blog": blogs})
 
 def my_blog(request, blog_slug):
@@ -121,8 +175,68 @@ def upgrade(request):
 def donate(request):
 	return render(request, "dashbord/donate.html", {})
 
+def events(request):
+	crypt = Dashconf.objects.get()
+	event = "Coin events"
+
+	if request.method == "POST":
+		srch = request.POST["search"]
+		search = srch.upper()
+		 
+		urls = "https://api.coinmarketcal.com/v1/coins?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg"
+
+		dat = requests.get(urls).json()
+
+		for s in dat:
+		        if search in s['symbol']:
+		                ids = s['id']
+		                url = "https://api.coinmarketcal.com/v1/events?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg&page=1&max=10&coins="+ids+"&sortBy=hot_events"
+
+		                data = requests.get(url).json()
+		                name = s['name']
+		                symbol = s['symbol']
+		                #for i in data:
+		                	#title = i["title"]
+		                    #	date = i["date_event"] 
+		                    #	source = i["source"]
+		                    #	dis = i["description"]
+
+		            	return render(request, "dashbord/event.html", {"crypto": crypt , "data": data, "name": name , 'sym': symbol, 'header': event})
+						 
+
+	
+	return render(request, "dashbord/event.html", {"crypto": crypt, 'header': event })
 
 
 
 
 
+
+"""
+
+	sig = Signels.objects.all()
+	print sig
+	uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY="
+
+	api = "a502c1f3-72e0-407a-aa7e-ece644776306"
+
+	url = uri + api
+
+	raw_data = requests.get(url).json()
+
+	data = raw_data['data']
+
+	for i in signel:
+		if i.signal_id == 0:
+			coin = i.symbol.upper()
+			for sym in data:
+				if coin in sym['symbol']:
+					ids = sym['id']
+					i.signal_id = ids
+					i.save()
+				else: 
+					pass
+		else:
+			pass
+				
+"""

@@ -18,7 +18,8 @@ class Dashconf(models.Model):
 
 class Signels(models.Model):
 	coin_name = models.CharField(max_length=300 , null=True, blank=True)
-	signal_id = models.IntegerField(default=0)
+	symbol = models.CharField(max_length=10 , null=True, blank=True)
+	signal_id = models.IntegerField(default=0, null=True, blank=True)
 	buy =  models.CharField(max_length=200 , null=True, blank=True)
 	sell =  models.CharField(max_length=200 , null=True, blank=True)
 	stop_loss = models.CharField(max_length=200 , null=True, blank=True)
@@ -35,7 +36,8 @@ class Exchange(models.Model):
 
 class Coin_listings(models.Model):
 	coin = models.CharField(max_length=300 , null=True, blank=True)
-	coin_id = models.IntegerField(null=True)
+	cymbol = models.CharField(max_length=10 , null=True, blank=True)
+	coin_id = models.IntegerField(default=0, null=True, blank=True)
 	exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE, null=True)
 	date = models.DateTimeField(default=datetime.now,blank=True,null=True, editable=False)
 

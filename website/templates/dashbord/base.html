@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="en">
 {% load static %}
+
+<style type="text/css">
+
+.footer-social-icons {
+    margin-left: 10%;
+    display: flex;
+}
+
+</style>
 <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="{% static 'dashboard/assets/img/favicon.ico' %}">
@@ -65,19 +74,21 @@
                         <p>User Profile</p>
                     </a>
                 </li> 
-    
+                
+                <li>
+                    <a href="/events">
+                        <i class="pe-7s-news-paper"></i>
+                        <p>Coin events</p>
+                    </a>
+                </li>
+
                 <li>
                     <a href="/airdrops">
                         <i class="pe-7s-note2"></i>
                         <p>Airdrops</p>
                     </a>
                 </li>
-                <li>
-                    <a href="https://blockonomi.com/category/news/">
-                        <i class="pe-7s-news-paper"></i>
-                        <p>Crypto News</p>
-                    </a>
-                </li>
+
                 <li>
                     <a href="/shop">
                         <i class="pe-7s-shopbag"></i>
@@ -173,7 +184,9 @@
                     </ul>
                 </div>
             </div>
-        </nav>        
+
+        </nav>
+
         {%block content%}
 
         {% endblock %}
@@ -205,6 +218,7 @@
 
 
 </body>
+</html>
 
     <!--   Core JS Files   -->
     <script src="{% static 'dashboard/assets/js/jquery.3.2.1.min.js' %}" type="text/javascript"></script>
@@ -227,7 +241,6 @@
 
 
 
-</html>
 
 
  <script type="text/javascript">

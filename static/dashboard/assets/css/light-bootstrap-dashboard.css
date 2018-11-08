@@ -136,7 +136,7 @@ h1 .subtitle {
 }
 
 .text-info, .text-info:hover {
-    color: #1DC7EA !important;
+    color: #EA9215; !important;
 }
 
 .text-success, .text-success:hover {
@@ -163,7 +163,7 @@ body {
 }
 
 a {
-    color: #1DC7EA;
+    color: #EA9215;
 }
 
 a:hover, a:focus {

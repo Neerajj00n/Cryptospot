@@ -1,0 +1,153 @@
+{% extends 'dashbord/base.html' %}
+{% load static %}
+{% block content %}
+
+<style type="text/css">
+
+.content {
+    padding: 15px;
+}
+
+.stats {
+    height: 60px;
+}
+
+.header {
+    height: 190px;
+}
+
+.butt {
+    padding: 5px 0;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.butt {
+    border-radius: 30px;
+}
+.butt {
+    background: transparent;
+    border: 1px solid #4abce6;
+    color: #4abce6;
+}
+
+.butt {
+    margin-left: 45px;
+    display: block;
+    width: 60%;
+}
+
+.searchbar{
+    margin-top:25px;
+   margin-left:283px;
+   width:100%;
+}
+
+body {
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 13px;
+} 
+
+form {
+  outline: 0;
+  float: left;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+form > .textbox {
+  outline: 0;
+  height: 45px;
+  width: 544px;
+  line-height: 42px;
+  padding: 0 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #212121;
+  border: 0;
+  float: left;
+  -webkit-border-radius: 4px 0 0 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+form > .textbox:focus {
+  outline: 0;
+  background-color: #FFF;
+}
+
+form > .button {
+  outline: 0;
+  background: none;
+  background-color: rgba(38, 50, 56, 0.8);
+  float: left;
+  height: 42px;
+  width: 42px;
+  text-align: center;
+  line-height: 42px;
+  border: 0;
+  color: #FFF;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 16px;
+  text-rendering: auto;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-transition: background-color .4s ease;
+  transition: background-color .4s ease;
+  -webkit-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+form > .button:hover {
+  background-color: rgba(0, 150, 136, 0.8);
+}    
+
+</style>
+
+<div class="content">
+            <div class="container-fluid">
+
+                        <div class="searchbar">
+                        <form method="post" action="/events" >
+                            {% csrf_token %}
+                          <input type="text" name="search" class="textbox" placeholder="Search with Coin symbol like BTC, ADA, etc">
+                          <input title="Search" value="" type="submit" class="button">
+                        </form>
+                        </div>
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="content">
+                                {% for i in data %}            
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                        <div class="card">
+                                        <div class="header">
+                                   
+                                            <h5> <i class="pe-7s-diamond" > {{name}} ({{sym}})</i> </h5>
+                                          
+                                            <h5> <i class="pe-7s-date" ></i> {{ i.date_event }} </h5>
+                                            <h5> <i class="pe-7s-note2"> {{ i.title }} </i> </h5>
+
+                                            <h> <i class="pe-7s-pin" > {{i.description}}</i> </h> 
+                                        </div> 
+
+                                            <div class="stats">
+                                                <hr>
+                                                <a  href={{i.source}} target="_blank" class="butt">Source</a>
+                                            </div>
+                                        </div>                
+                                    </div>
+                                {% endfor %}          
+                        </div>
+        </div>
+</div>
+
+{% endblock %} 

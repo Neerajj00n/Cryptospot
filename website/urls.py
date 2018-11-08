@@ -13,6 +13,7 @@ urlpatterns=[
 	url(r'upgrade', views.upgrade , name ='upgrade'),
 	url(r'shop', views.shoping , name ='shop'),
 	url(r'faq', views.faq, name='faq'),
+	url(r'events', views.events)
 	
 
 #	url(r'^edit', views.edit)

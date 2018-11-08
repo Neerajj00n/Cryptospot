@@ -1,6 +1,24 @@
 <!DOCTYPE HTML>
 <html lang="en">
 {% load static %}
+
+<style type="text/css">
+
+span.step-links {
+    margin: auto;
+}
+
+a.btn.btn-brdr-primary.mb-3 {
+    padding-top: inherit;
+}
+
+span.current {
+    padding: 20px;
+}
+
+
+</style>
+
 <head>
 	<title>Newsbit</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,6 +106,23 @@
 						</div><!-- col-sm-6 -->
 						{% endfor %}
 					</div><!-- row -->
+
+					<div class="pagination ">
+					    <span class="step-links">
+					        {% if blog.has_previous %}
+					            <a class="btn btn-brdr-primary mb-3" href="?page={{ blog.previous_page_number }}">previous</a>
+					        {% endif %}
+
+					        <span class="current">
+					          <b> Page {{ blog.number }} of {{ blog.paginator.num_pages }}. </b>
+					        </span>
+
+					        {% if blog.has_next %}
+					            <a class="btn btn-brdr-primary mb-3" href="?page={{ blog.next_page_number }}">next</a>
+					        {% endif %}
+					    </span>
+					</div>
+
 					
 					<a class="dplay-block btn-brdr-primary mt-20 mb-md-50" href="#"><b>LOAD MORE</b></a>
 				</div><!-- col-md-9 -->
