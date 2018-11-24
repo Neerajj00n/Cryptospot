@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from datetime import datetime
 from django.core.validators import URLValidator
+from slugify import slugify
 #from django.contrib.contenttypes.fields import GenericRelation
 #from star_ratings.models import Rating
 
@@ -51,8 +52,14 @@ class Airdrop(models.Model):
 	ratings = models.IntegerField(blank=True, null=True,) 	
 	details = models.TextField(max_length=2000, null=True, blank=True )
 	status = models.CharField(max_length=50 ,  null=True, choices=[('Active', 'Active'), ('Expired', 'Expired')])
-#	ratings = GenericRelation(Rating, related_query_name='foos')
+	slug = models.SlugField(max_length=255, null=True, blank=True, editable=False)
 	
+	def save(self, *args, **kwargs):
+	   	
+	   	self.slug = slugify(self.Coin_name)
+		super(Airdrop, self).save(*args, **kwargs)
+
+
 	def __str__(self):
 		return self.Coin_name
 
@@ -64,3 +71,13 @@ class Shop(models.Model):
 
 	def __str__(self):
 		return self.item_name
+
+@classmethod
+def model_field_exists(cls, field):
+    try:
+        cls._meta.get_field(field)
+        return True
+    except models.FieldDoesNotExist:
+        return False
+
+models.Model.field_exists = model_field_exists

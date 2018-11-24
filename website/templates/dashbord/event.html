@@ -39,7 +39,7 @@
 
 .searchbar{
     margin-top:25px;
-   margin-left:283px;
+    margin-left: 15%;
    width:100%;
 }
 
@@ -55,7 +55,11 @@ body {
   font-size: 13px;
 } 
 
+
 form {
+
+  display: flex;
+  width: 70%;
   outline: 0;
   float: left;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -67,7 +71,7 @@ form {
 form > .textbox {
   outline: 0;
   height: 45px;
-  width: 544px;
+  width: 100%;
   line-height: 42px;
   padding: 0 16px;
   background-color: rgba(255, 255, 255, 0.8);
@@ -114,7 +118,7 @@ form > .button:hover {
             <div class="container-fluid">
 
                         <div class="searchbar">
-                        <form method="post" action="/events" >
+                        <form id="Values" method="post" action="/events" >
                             {% csrf_token %}
                           <input type="text" name="search" class="textbox" placeholder="Search with Coin symbol like BTC, ADA, etc">
                           <input title="Search" value="" type="submit" class="button">
@@ -125,7 +129,7 @@ form > .button:hover {
                         <br>
                         <br>
                         <br>
-                        <div class="content">
+                        <div class="content" id="Result">
                                 {% for i in data %}            
                                     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                         <div class="card">
@@ -133,7 +137,7 @@ form > .button:hover {
                                    
                                             <h5> <i class="pe-7s-diamond" > {{name}} ({{sym}})</i> </h5>
                                           
-                                            <h5> <i class="pe-7s-date" ></i> {{ i.date_event }} </h5>
+                                            <h5> <i class="pe-7s-date" ></i> {{ i.date_event|slice:":10"  }} </h5>
                                             <h5> <i class="pe-7s-note2"> {{ i.title }} </i> </h5>
 
                                             <h> <i class="pe-7s-pin" > {{i.description}}</i> </h> 
@@ -147,6 +151,15 @@ form > .button:hover {
                                     </div>
                                 {% endfor %}          
                         </div>
+                                {% if messages %}
+                                <ul class="messages">
+                                  {% for message in messages %}
+                                  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message}}</li>
+                                  {% endfor %}
+                                 </ul>
+                                {% endif %}
+
+
         </div>
 </div>
 

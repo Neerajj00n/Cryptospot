@@ -1,0 +1,116 @@
+{% extends 'dashbord/base.html' %}
+{% block content %}
+{% load static %}
+
+<style type="text/css">
+
+.content {
+    text-align: center;
+}
+
+
+.checked {
+    color: orange;
+}
+
+
+span.stars, span.stars span {
+    display: block;
+    background: url(stars.png) 0 -16px repeat-x;
+    width: 80px;
+    height: 16px;
+}
+
+span.stars span {
+    background-position: 0 0;
+
+}
+.butt {
+    border-radius: 30px;
+}
+.butt {
+    background: transparent;
+    border: 1px solid #4abce6;
+    color: #4abce6;
+}
+
+.butt {
+    margin-left: 45px;
+    display: block;
+    width: 60%;
+}
+	
+
+</style>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Airdrops</h4>
+                                <p class="category">Join new airdrops</p>
+                            </div>
+                            <div class="content">
+										
+											<image src={{airdrop.logo.url}}  width="10%" >
+											<h2><b>{{airdrop.Coin_name}}<b></h1>
+											<h3><b>{{airdrop.value}}$<b></h2>
+
+											{% if airdrop.ratings == 1 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star "></span>
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span> 
+
+                                            {% elif airdrop.ratings == 2 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span>
+                                            {% elif airdrop.ratings == 3 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star "></span> 
+                                            <span id="star" class="fa fa-star "></span>
+                                            {% elif airdrop.ratings == 4 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star "></span>
+                                            {% elif airdrop.ratings == 5 %}
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span> 
+                                            <span id="star" class="fa fa-star checked"></span>
+                                            {% elif airdrop.ratings <= 0 %}
+                                                <p>n/a</p>
+
+                                            {% endif %}
+                    
+                                            <br>
+                                            <br>
+                                        	<td>{{airdrop.details|urlize|linebreaks }}</td>
+                                        	<a class="bnt btn-primary butt" href="https://airdropalert.com/bitsafe-airdrop-form"> Airdrop form </a>
+
+											
+              	                      </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}  
+

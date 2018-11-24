@@ -19,6 +19,7 @@ class Blog(models.Model):
 	content = RichTextUploadingField()
 	box_image = models.ImageField(upload_to="Blog/",blank=True,null=True)
 	published_on = models.DateTimeField(default=datetime.now,blank=True,null=True, editable=False)
+	blog_views = models.IntegerField(default=0)
 	slug = models.SlugField(max_length=255, null=True, blank=True, editable=False)
 
 	def save(self, *args, **kwargs):

@@ -48,20 +48,15 @@ def contact(request):
 	 		mail = EmailMessage(subject, msg, email, ['neerajjoon0@gmail.com'], reply_to=[email])
 	 		mail.send()
 	 	
-
-	 		return redirect('dashbord')
+	 		messages.success(request , "Email sent")
+	 		
 
 	 	except BadHeaderError:
-	 		print email
-	 		return HttpResponse('Invalid header found.')
-
+	 		message.error(request , "Email Error.")
 
 	return render(request, 'dashbord/contact.html', {"crypto": crypt , "header": con })
 
 
-
-
-	return render(request, 'login.html', {})
 
 def dashbord(request):
 	crypt = Dashconf.objects.get()
@@ -69,52 +64,32 @@ def dashbord(request):
 	listing = Coin_listings.objects.all()
 	dash = "Dashboard"
 
-
-	uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY="
-
-	api = "a502c1f3-72e0-407a-aa7e-ece644776306"
-
-	url = uri + api
-
-	raw_data = requests.get(url).json()
-
-	data = raw_data['data']
-
 	for i in signel:
 		if i.signal_id == 0:
 			coin = i.symbol.upper()
-			for sym in data:
-				if coin in sym['symbol']:
-					ids = sym['id']
-					i.signal_id = ids
-					i.save()
-				else: 
-					pass
+			coincap(request, coin , i)
 		else:
 			pass
 
-	for s in listing:
-		if s.coin_id == 0:
-			lst = s.cymbol.upper()
-			for sig in data:
-				if lst in sig['symbol']:
-					ide = sig['id']
-					s.coin_id = ide
-					s.save()
-				else: 
-					pass
+	for i in listing:
+		if i.coin_id == 0:
+			coin = i.cymbol.upper()
+			coincap(request, coin , i)
 		else:
 			pass
 
 
-	return render(request, "dashbord/dashbord.html", {"crypto": crypt , "signels" : reversed(signel), "listing": reversed(listing), "header": dash }) #'order': order }) 
+	
+	return render(request, "dashbord/dashbord.html", {"crypto": crypt , "signels" : reversed(signel), "listing": reversed(listing), "header": dash }) 
 
 
 def blogs(request):
 	crypt = Dashconf.objects.get()
 	contact_list = Blog.objects.all()
+	pop_list = Blog.objects.all().order_by('-blog_views')
+	pop = contact_list[:3]
 
-	paginator = Paginator(contact_list, 2) # Show 25 contacts per page
+	paginator = Paginator(contact_list, 4) # Show 25 contacts per page
 
 	page = request.GET.get('page')
 
@@ -128,26 +103,40 @@ def blogs(request):
     		blogs = paginator.page(paginator.num_pages)
 
 	
-	return render(request, "dashbord/blogs.html", {"crypto": crypt, "blog": blogs})
+	return render(request, "dashbord/blogs.html", {"crypto": crypt, "blog": blogs, 'popular': pop})
 
 def my_blog(request, blog_slug):
 	title1=''
 	try:
-		blog = Blog.objects.get(slug=blog_slug)
+		blog = Blog.objects.get(slug=blog_slug)			
+		blog.blog_views = blog.blog_views + 1
+		blog.save()
 		title1=k.title
 	except:
 		title1='blog not exist'
 
+	contact_list = Blog.objects.all().order_by('-blog_views')
+	pop = contact_list[:3]		
 
-	return render(request, "dashbord/blog_single.html", {'blog': blog})
+
+	return render(request, "dashbord/blog_single.html", {'blog': blog, 'popular': pop})
 
 
-def listing(request):
+def airdrops(request):
 	crypt = Dashconf.objects.get()
 	airdrop = Airdrop.objects.all()
 	air = "Airdrops"
 
-	return render(request, "dashbord/table.html", {"crypto": crypt , "airdrop": reversed(airdrop), "header": air})
+	return render(request, "dashbord/airdrop.html", {"crypto": crypt , "airdrop": reversed(airdrop), "header": air})
+
+
+def airdrop_single(request, airdrop_slug):
+	crypt = Dashconf.objects.get()
+	airdrop = Airdrop.objects.get(slug=airdrop_slug)
+	air = "Airdrops"
+
+
+	return render(request, "dashbord/airdrop-single.html", {"crypto": crypt , "airdrop": airdrop, "header": air})
 
 
 def shoping(request):
@@ -201,10 +190,9 @@ def events(request):
 		                    #	source = i["source"]
 		                    #	dis = i["description"]
 
-		            	return render(request, "dashbord/event.html", {"crypto": crypt , "data": data, "name": name , 'sym': symbol, 'header': event})
-						 
-
-	
+		       	    	return render(request, "dashbord/event.html", {"crypto": crypt , "data": data, "name": name , 'sym': symbol, 'header': event})
+				 
+	messages.error(request, 'no events')
 	return render(request, "dashbord/event.html", {"crypto": crypt, 'header': event })
 
 
@@ -212,10 +200,9 @@ def events(request):
 
 
 
-"""
 
-	sig = Signels.objects.all()
-	print sig
+def marketcap(request , coin , i):
+
 	uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY="
 
 	api = "a502c1f3-72e0-407a-aa7e-ece644776306"
@@ -226,17 +213,64 @@ def events(request):
 
 	data = raw_data['data']
 
-	for i in signel:
-		if i.signal_id == 0:
-			coin = i.symbol.upper()
-			for sym in data:
-				if coin in sym['symbol']:
-					ids = sym['id']
-					i.signal_id = ids
-					i.save()
-				else: 
-					pass
-		else:
+	for sym in data:
+		if coin in sym['symbol']:
+			ids = sym['id']
+			i.signal_id = ids
+			i.save()
+		else: 
 			pass
-				
+
+def coincap(request, coin , i):
+
+	url = "https://api.coinmarketcap.com/v2/ticker/"
+
+	raw_data = requests.get(url).json()
+
+	data = raw_data['data']
+
+	for s in data:
+	     	sym = data[s]['symbol']
+	        if coin in sym:
+	        	ids = data[s]['id']
+	        	
+	        	if i.field_exists('coin_id'):
+		        		i.coin_id = ids
+	        			i.save()
+	        	else:
+	        		i.signal_id = ids
+	        		i.save()
+	        
+	        else:
+	        	pass
+
+
+def profile(request):
+	return render(request , "dashbord/user.html", {})
+
+"""
+def coinevent(request , search):
+	crypt = Dashconf.objects.get()
+	event = "Coin events"
+
+	urls = "https://api.coinmarketcal.com/v1/coins?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg"
+
+	dat = requests.get(urls).json()
+
+	for s in dat:
+    		if search in s['symbol']:
+    			ids = s['id']
+			url = "https://api.coinmarketcal.com/v1/events?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg&page=1&max=10&coins="+ids+"&sortBy=hot_events"
+			
+			data = requests.get(url).json()
+			name = s['name']
+			symbol = s['symbol']
+                                #for i in data:
+                                        #title = i["title"]
+                                    #   date = i["date_event"] 
+                                    #   source = i["source"]
+                                    #   dis = i["description"]
+
+			return render(request, "dashbord/event.html", {"crypto": crypt , "data": data, "name": name , 'sym': symbol, 'header': event})
+
 """
