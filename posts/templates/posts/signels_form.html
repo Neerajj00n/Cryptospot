@@ -1,0 +1,21 @@
+{% extends 'dashbord/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+
+<div class="content">
+	<div class="container-fluid">
+    <form method="POST">
+    	{% csrf_token %}
+    	<fieldset class="form_group">
+    		<legend class="border-bottom mb-4">create signel</legend>
+    		{{ form|crispy }}
+    	</fieldset>
+    	<div class="form_group">
+    		<button class="btn btn-outline-info" type="submit">Post</button>
+    </form>
+
+    </div>
+</div>
+                
+{% endblock %}  

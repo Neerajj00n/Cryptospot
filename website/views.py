@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User 
 from .models import Configration
 from blog.models import *
-from .models import Profile
+#from .models import Profile
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.contrib.auth.models import User
@@ -19,7 +19,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from notifications.signals import notify
 import requests
 import json
-
+from posts.models import *
 # Create your views here.
 
 conf =  Configration.objects.all()
@@ -41,18 +41,28 @@ def contact(request):
 		message = request.POST['message']
 		name = firstname +' '+lastname
 		msg = name +" "+ message
+		
+		if firstname == "":
+			messages.error(request , "Firstname is empty.")
+		
+		elif lastname == "":
+			messages.error(request , "Lastname is empty.", )		
+		elif subject == "":
+			messages.error(request , "subject is empty.", )	
+		elif messages == "":
+			messages.error(request , "message is empty.", )
+		
+		else:
 
+		 	try:
+		 		mail = EmailMessage(subject, msg, email, ['neerajjoon0@gmail.com'], reply_to=[email])
+		 		mail.send()
+		 	
+		 		messages.success(request , "Email sent")
+		 		
 
-
-	 	try:
-	 		mail = EmailMessage(subject, msg, email, ['neerajjoon0@gmail.com'], reply_to=[email])
-	 		mail.send()
-	 	
-	 		messages.success(request , "Email sent")
-	 		
-
-	 	except BadHeaderError:
-	 		message.error(request , "Email Error.")
+		 	except BadHeaderError:
+		 		messages.error(request , "Email Error.")
 
 	return render(request, 'dashbord/contact.html', {"crypto": crypt , "header": con })
 
@@ -149,10 +159,6 @@ def shoping(request):
 	return render(request, "dashbord/shop.html", {"crypto": crypt , "shop": shop , 'header': sop})
 
 
-def posts(request):
-	return render(request, "dashbord/notifications.html", {})
-
-
 def faq(request):
 	crypt = Dashconf.objects.get()
 	return render(request, "dashbord/FAQ.html", {"crypto": crypt})
@@ -245,8 +251,8 @@ def coincap(request, coin , i):
 	        	pass
 
 
-def profile(request):
-	return render(request , "dashbord/user.html", {})
+#def posts(request):
+#	return render(request , "dashbord/posts.html", {})
 
 """
 def coinevent(request , search):

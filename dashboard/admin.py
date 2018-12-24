@@ -6,7 +6,6 @@ from dashboard.models import *
 # Register your models here.
 
 admin.site.register(Dashconf)
-admin.site.register(Signels)
 admin.site.register(Coin_listings)
 admin.site.register(Exchange)
 admin.site.register(Airdrop)

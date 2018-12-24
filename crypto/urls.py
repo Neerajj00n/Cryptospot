@@ -22,6 +22,7 @@ import notifications.urls
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^',include('website.urls')),
+    url(r'^',include('posts.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

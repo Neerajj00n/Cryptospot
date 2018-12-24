@@ -10,12 +10,12 @@ urlpatterns=[
 	url(r'airdrops', views.airdrops , name='airdrops' ),
 	url(r'^airdrop/(?P<airdrop_slug>[-_\w]+)$', views.airdrop_single),
 	url(r'donate', views.donate, name="donate"),
-	url(r'posts', views.posts , name='posts'),
+#	url(r'posts', views.posts , name='posts'),
 	url(r'upgrade', views.upgrade , name ='upgrade'),
 	url(r'shop', views.shoping , name ='shop'),
 	url(r'faq', views.faq, name='faq'),
 	url(r'events', views.events),
-	url(r'profile', views.profile),
+	
 	
 
 #	url(r'^edit', views.edit)
