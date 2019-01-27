@@ -17,12 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-import notifications.urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^',include('website.urls')),
     url(r'^',include('posts.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

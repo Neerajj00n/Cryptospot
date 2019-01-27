@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'posts',
     'ckeditor',
     'ckeditor_uploader',
-    'notifications',
     'crispy_forms',
 ]
 

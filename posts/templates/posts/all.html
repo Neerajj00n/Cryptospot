@@ -24,78 +24,55 @@ i.pe-7s-angle-down-circle {
     padding: 10px 0 0 !important; 
 }
 
+h7 {
+    padding-top: 16px;
+    float: left;
+    font-size: small;
+}
+
+.pro-card {
+    display: grid;
+    text-align: -webkit-center;
+    font-size: medium;
+}
+
+.btn.opro {
+    width: 50%;
+}
+
+.head2 {
+    text-align: center;
+    background-color: #f3a23c;
+    color: white;
+    font-size: x-large;
+}
+
+.stats {
+    display: grid;
+}
+
 </style>
 
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-
-                    <div class="col-md-8">
-                        {% for i in signels %}
-
-                        <div class="card post_card ">
-                            <div class="content2 ">
-                                <div class="header">
-                                    <div class="line">
-                                    <image src="{{i.author.profile.Propic.url}}" height="30" width="30" >&nbsp;
-                                    <a type="button" href="/profile/{{i.author.username}}" class="username"><b>{{i.author.username}}</b></a>
-        
-
-                                    <div class="pro">
-                                        <ul class="nav navbar-nav navbar-left pos">
-                                            <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                            <i class="pe-7s-angle-down-circle"></i>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="{% url 'post-edit' i.id %}">Edit</a></li>
-                                                <li><a href="{% url 'post-delete' i.id %}">Delete</a></li>
-                                                <li><a href="#">Notificati</a></li>
-                                                
-                                            </ul>
-                                            </li>
-                                        </ul>
-
-                                    </div>
-                                </div>
-                                    <p class="category">{{i.title}} </p>
-                                    <p class="category"><b>{{i.coin_name}}({{i.symbol}})</b></p>
-                                    
-                                </div>
-                        
-                                <script type="text/javascript" src="{% static 'dashboard/currency.js' %}"></script><div class="coinmarketcap-currency-widget" data-currencyid="{{ i.signal_id }}" data-base="USD" data-secondary="" data-ticker="false" data-rank="false" data-marketcap="false" data-volume="false" data-stats="USD" data-statsticker="false"></div>
-
-                                <div class="footer" id="legend">
-                                    <div class="legend">
-                                        <b class="buy">buy</b>:{{ i.buy }} ,  &nbsp;
-                                        <b class="sell">sell</b>: {{i.sell}},  &nbsp;
-                                        <b class="stop loss">stop loss</b>: {{ i.stop_loss }}
-                                    </div>
-                                    <hr>
-                                
-                                    <div class="stats">
-                                        <i class="fa fa-check">{{i.trade_time}}</i>
-                                        <i class="fa fa-check">{{i.Exchange}}</i>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            {% endfor %}    
-                        
+                    <div>
+                        <button class="head btn">Home</button>
+                        <button class="head btn">all</button>
                     </div>
+                    <br>
+                    {% include 'posts/posts.html'%}
                     <div class="col-md-4">
                         <div class="card card-user">
                             <div class="image">
                                 <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
                             </div>
                             <div class="content">
-                                <form method="post" action="/profile" enctype="multipart/form-data">
-                                    {% csrf_token %}
                                 <div class="author">
                                      <a href="#">
                                     <img class="avatar border-gray" src="{{ user.profile.Propic.url }}" alt="..."/>
                                     <div class="upload-button">
-                                        <a type="button" href="{% url 'profile' user.username %}">Profile</a>
+                                        <!--a type="button" href="{% url 'profile' user.username %}">Profile</a-->
                                             
                                     </div>
 
@@ -108,9 +85,9 @@ i.pe-7s-angle-down-circle {
                                 </div>
                                 <hr>
                                 <div class="stats">
-                                  <a type="button"  href="{% url 'post-create' %}" > Create Post</a>  
+                                  <a type="button" class="btn" href="{% url 'post-create' %}" > Create Post</a>
+                                  <a type="button" class="btn" href="{% url 'profile' user.username %}">View profile</a> 
                                 </div>
-                                
                                 </p>
                             </form>
                             </div>
@@ -122,7 +99,25 @@ i.pe-7s-angle-down-circle {
 
                             </div>
                         </div>
+                        <div class="card card-user">
+                            <div class="head2"><b>Other users</b></div>
+                            <br>
+                                {% for i in ousers %}
+                            <div class="content1">
+                                <div class="pro-card">
+                                   <img height="50" width="50" src="{{i.profile.Propic.url}}"></li>
+                                   <a href="/{{i.username}}"><b>{{i.username}}</b></a>
+                                   <br>
+                                   <a class="btn opro" type="button" href="/{{i.username}}" >view profile</a>
+                                   <hr>
+                                </div>
+                            </div>    
+                                {% endfor %}   
+    
+           
+                        </div>
                     </div>
+    
 
                 </div>
             </div>

@@ -1,0 +1,76 @@
+{% extends 'dashbord/base.html' %}
+{% block content %}
+{% load static %}
+<style type="text/css">
+
+.pro-card {
+    display: -webkit-box;
+}
+.srch {
+    margin-left: 40%;
+}
+
+.bio{
+	display: -webkit-inline-box;
+    font-size: smaller;
+    font-family: initial;
+    color: darkgray;
+}
+
+
+</style>
+<div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                	<div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Search</h4>
+                                <p class="category">You searched for <b>{{ query }}<b></p>
+                            </div>
+                            <hr>
+                    		{% for message in messages %}
+			                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+			                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                      </button>
+			                      {{ message }}
+			                </div>
+			              {% endfor %}
+                		
+                            <div class="content1">
+                                <div class="pro-card">
+                                   <img height="50" width="50" src="{{users.profile.Propic.url}}"></li>
+                                   <a href="/{{users.username}}"><b>{{users.username}}</b></a>
+                                   <br>
+                                   <div class="bio"><super> bio: {{users.profile.bio}}</super></div>
+                                   
+                                   
+                                   <div class="srch">
+                                   <a class="btn opro" type="button" href="/{{users.username}}">view profile</a>
+
+                                   {% if request.user != users %}
+                                    {% if not users in follower_list %}
+                                        <a href="{% url 'follow' pk=users.pk %}"
+                                         type="button" class="btn btn-success">follow
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'unfollow' pk=users.pk %}"
+                                         type="button" class="btn btn-default">unfollow</a>
+
+                                    {% endif %}
+                                {% endif %}
+              
+         		                  </div>
+                                </div>
+                            </div>    
+                       
+                        <hr>
+
+                        </div>
+                        </div>           
+         		</div>
+         	</div>
+</div> 
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% load static %}
+<div class="col-md-8">
+                        {% for i in signels %} 
+
+                        <div class="card post_card ">
+                            <div class="content2 ">
+                                <div class="header">
+                                    <div class="line">
+                                    <image src="{{i.author.profile.Propic.url}}" height="30" width="30" >&nbsp;
+                                    <a type="button" href="/profile/{{i.author.username}}" class="username"><b>{{i.author.username}}</b></a>
+
+                                    <div class="pro">
+                                        <h7>{{i.created_at}}</h7>
+                                        <ul class="nav navbar-nav navbar-left pos">
+                                            <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="pe-7s-angle-down-circle"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="{% url 'post-edit' i.id %}">Edit</a></li>
+                                                <li><a href="{% url 'post-delete' i.id %}">Delete</a></li>
+                                                <li><a href="#">Notificati</a></li>
+                                                
+                                            </ul>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                                    <p class="category">{{i.title}} </p>
+                                    <p class="category"><b>{{i.coin_name}}({{i.symbol}})</b></p>
+                                    
+                                </div>
+                        
+                                <script type="text/javascript" src="{% static 'dashboard/currency.js' %}"></script><div class="coinmarketcap-currency-widget" data-currencyid="{{ i.signal_id }}" data-base="USD" data-secondary="" data-ticker="false" data-rank="false" data-marketcap="false" data-volume="false" data-stats="USD" data-statsticker="false"></div>
+
+                                <div class="footer" id="legend">
+                                    <div class="legend">
+                                        <b class="buy">buy</b>:{{ i.buy }} ,  &nbsp;
+                                        <b class="sell">sell</b>: {{i.sell}},  &nbsp;
+                                        <b class="stop loss">stop loss</b>: {{ i.stop_loss }}
+                                    </div>
+                                    <hr>
+                                
+                                    <div class="stats">
+                                        <i class="fa fa-check">Trade:{{i.trade_time}}</i>
+                                        <i class="fa fa-check">Exchange: {{i.Exchange}}</i>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            {% endfor %}    
+                        
+                    </div>

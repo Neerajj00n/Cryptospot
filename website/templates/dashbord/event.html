@@ -12,6 +12,15 @@
     height: 60px;
 }
 
+Input#searchInputX {
+    width: fit-content;
+}
+
+button.search-input__btn {
+    height: 34px;
+    margin-right: 6px;
+}
+
 .header {
     height: 190px;
 }
@@ -42,6 +51,20 @@
     margin-left: 15%;
    width:100%;
 }
+
+.alert.alert-dismissible {
+    width: 60%;
+    border-radius: 4px;
+    opacity: .9;
+  /*  display: inline-block; */
+}
+
+.alert button.close {
+    position: unset;
+    margin: auto;
+}
+
+
 
 body {
 
@@ -110,9 +133,40 @@ form > .button {
 
 form > .button:hover {
   background-color: rgba(0, 150, 136, 0.8);
-}    
+}
+
+.alert {
+  padding: 20px;
+ /* background-color: #f44336; */
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin-bottom: 15px;
+}
+
+.alert.success {background-color: #4CAF50;}
+.alert.info {background-color: #2196F3 ;}
+.alert.warning {background-color: #ff9800;}
+
+.closebtn 
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
 
 </style>
+<head>
+  </head>
 
 <div class="content">
             <div class="container-fluid">
@@ -120,7 +174,7 @@ form > .button:hover {
                         <div class="searchbar">
                         <form id="Values" method="post" action="/events" >
                             {% csrf_token %}
-                          <input type="text" name="search" class="textbox" placeholder="Search with Coin symbol like BTC, ADA, etc">
+                          <input type="text" name="search" class="textbox" placeholder="Search with Coin symbol like BTC, ADA, etc" oninvalid="this.setCustomValidity('Symbol required')" required>
                           <input title="Search" value="" type="submit" class="button">
                         </form>
                         </div>

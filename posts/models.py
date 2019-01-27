@@ -2,7 +2,6 @@ from django.db import models
 from datetime import datetime
 from django.core.validators import URLValidator
 from slugify import slugify
-from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -51,7 +50,66 @@ class Profile(models.Model):
     email_confirmed = models.BooleanField(default=False)
     Propic = models.ImageField(upload_to="Banners/propics/", default="Banners/propics/default.png")
     bio = models.TextField(max_length=500, blank=True)
+    
     # other fields...
+    def __str__(self):
+        return str(self.user)
+
+    def get_following(self, current_user):
+        followess = Follow.objects.filter(from_user__username=current_user)    
+        following = []
+        for i in followess:
+            following.append(i.to_user)
+        return following
+
+    def get_followers_count(self ,current_user):
+        followers_count = Follow.objects.filter(to_user__username=current_user).count()
+        return followers_count
+
+
+class Follow(models.Model):
+    from_user = models.ForeignKey(User,
+        on_delete=models.CASCADE,
+        related_name='from_user',
+        null=True
+    )
+    to_user = models.ForeignKey(User,
+        on_delete=models.CASCADE,
+        related_name='to_user',
+         null=True
+    )
+
+    class Meta:
+        unique_together=('from_user', 'to_user')
+
+    def __str__(self):
+        return '{} follows {}'.format(self.from_user, self.to_user)
+
+    
+
+
+
+
+
+
+
+#    user = models.ForeignKey(User, related_name='owner', null=True)
+#    Following = models.ManyToManyField(User)
+    
+
+
+#class Relationship(models.Model):
+ #   from_user = models.ForeignKey(Profile, related_name="user_who_is_following")
+  #  to_user = models.ForeignKey(Profile, related_name="user_who_is_being_followed")
+
+#class Follow(models.Model):
+#    Followed = models.ForeignKey(Profile, related_name='originalUserWhoIsBeingFollowed')
+#    Following = models.ForeignKey(Profile, related_name='theUserWhoIsFollowing')
+
+ #   def __str__(self):
+ #       return self.Following.user.username + " -> " + self.Followed.user.username
+
+
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):

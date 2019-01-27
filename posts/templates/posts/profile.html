@@ -20,68 +20,52 @@ i.pe-7s-angle-down-circle {
     font-size: 20px;
 }   
 
+.header {
+    padding: 10px 0 0 !important; 
+}
+
+h7 {
+    padding-top: 16px;
+    float: left;
+    font-size: small;
+}
+
+
+vr{ 
+    margin-left: 20%;
+    border:         none;
+    border-left:    1px solid hsla(200, 10%, 50%,100);
+    height:         100vh;
+    width:          1px;       
+}
+
+.stats {
+    display: grid;
+}
+
+.Followers {
+    font-size: larger;
+    float: left;
+}
+
+.Following {
+    font-size: large;
+    float: right;
+}
+
 </style>
 
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-
-                    <div class="col-md-8">
-                        {% for i in signels %}
-
-                        <div class="card post_card ">
-                            <div class="content2 ">
-                                <div class="header">
-                                    <div class="line">
-                                    <image src="{{i.author.profile.Propic.url}}" height="30" width="30" >&nbsp;
-                                    <a herf="/profile" class="username"><b>{{i.author.username}}</b></a>
-        
-
-                                    <div class="pro">
-                                        <ul class="nav navbar-nav navbar-left pos">
-                                            <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                            <i class="pe-7s-angle-down-circle"></i>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="{% url 'post-edit' i.id %}">Edit</a></li>
-                                                <li><a href="{% url 'post-delete' i.id %}">Delete</a></li>
-                                                <li><a href="#">Notificati</a></li>
-                                                
-                                            </ul>
-                                            </li>
-                                        </ul>
-
-                                    </div>
-                                </div>
-                                    <p class="category">wanna make some money </p>
-                                </div>
-                        
-                                <script type="text/javascript" src="{% static 'dashboard/currency.js' %}"></script><div class="coinmarketcap-currency-widget" data-currencyid="{{ i.signal_id }}" data-base="USD" data-secondary="" data-ticker="false" data-rank="false" data-marketcap="false" data-volume="false" data-stats="USD" data-statsticker="false"></div>
-
-                                <div class="footer" id="legend">
-                                    <div class="legend">
-                                        <b class="buy">buy</b>:{{ i.buy }} ,  &nbsp;
-                                        <b class="sell">sell</b>: {{i.sell}},  &nbsp;
-                                        <b class="stop loss">stop loss</b>: {{ i.stop_loss }}
-                                    </div>
-                                    <hr>
-                                
-                                    <div class="stats">
-                                        <i class="fa fa-check"></i> LONG TERM 
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            {% endfor %}    
-                        
-                    </div>
+                    {% include 'posts/posts.html'%}
+                   
                     <div class="col-md-4">
                         <div class="card card-user">
                             <div class="image">
                                 <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
                             </div>
-                            <div class="content">
+                            <div class="content" >
                                 <form method="post" action="/profile" enctype="multipart/form-data">
                                     {% csrf_token %}
                                 <div class="author">
@@ -97,7 +81,26 @@ i.pe-7s-angle-down-circle {
                                 </div>
                                 <hr>
                                 <div class="stats">
-                                <a type="button" href="{% url 'profile-edit' %}"> edit profile</a>  <a type="button"  href="{% url 'post-create' %}" > Create Post</a>  
+                                    <div class="follow">
+                                    <div class="Followers"> Followers: {{followers_count}} </div> <vr> <div class="Following">Following: {{list_count|length}}
+                                     </div>
+                                     </div>
+                                     <br>   
+                                {% if request.user == user %}
+                                <a type="button" class="btn" href="{% url 'profile-edit' user.username %}"> edit profile</a>  
+                                <a type="button" class="btn" href="{% url 'post-create' %}" > Create Post</a>
+                                {% endif %}
+                                {% if request.user != user %}
+                                    {% if not user in follower_list %}
+                                        <a href="{% url 'follow' pk=user.pk %}"
+                                         type="button" class="btn btn-success">follow
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'unfollow' pk=user.pk %}"
+                                         type="button" class="btn btn-default">unfollow</a>
+
+                                    {% endif %}
+                                {% endif %}
                                 </div>
                                 
                                 </p>

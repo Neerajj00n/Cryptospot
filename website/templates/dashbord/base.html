@@ -9,6 +9,71 @@
     display: flex;
 }
 
+/** sass/scss/less code */
+/* -------------------------------- 
+
+Title: Search input
+Descr: Search input field with custom button
+
+-------------------------------- */
+:root {
+  --search-input-btn-width: 2.8em;
+  --search-input-icon-size: 1.25em;
+}
+
+input#searchInputX {
+    HEIGHT: 60%;
+}
+
+.search-input {
+  width: 280px;
+  height: 60%;  
+  padding-top: 10px;
+  position: relative;
+}
+.search-input .form-control::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.search-input--icon-right .form-control {
+  padding-right: var(--search-input-btn-width);
+}
+.search-input--icon-left .form-control {
+    height: 60%;
+  padding-left: var(--search-input-btn-width);
+}
+.search-input__btn {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  width: var(--search-input-btn-width);
+}
+.search-input__btn:active .icon {
+  transform: scale(0.9);
+}
+.search-input__btn .icon {
+  display: block;
+  width: var(--search-input-icon-size);
+  height: var(--search-input-icon-size);
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--color-contrast-low);
+  transition: transform 0.2s;
+}
+.search-input--icon-left .search-input__btn {
+  left: 0;
+  right: auto;
+  pointer-events: none;
+}
+.search-input__btn:focus .icon,
+.search-input .form-control:focus + .search-input__btn .icon {
+  color: var(--color-primary);
+}
+
+
 </style>
 <head>
     <meta charset="utf-8" />
@@ -110,11 +175,11 @@
 
                 <li class="active-pro">
                  {% if request.user.is_authenticated %}   
-                    <a href="/logout">
+                    <a href="{% url 'logout_view' request.user.username %}">
                         <i class="pe-7s-rocket"></i>
                         <p>logout</p>
                     {% else %}
-                    <a href="/login">
+                    <a href="{% url 'auth_login' %}">
                         <i class="pe-7s-rocket"></i>
                         <p>login/signup</p>
                     {% endif %}
@@ -162,10 +227,19 @@
                               </ul>
                         </li>
                         <li>
-                           <a href="">
+                           <!--a href="">
                                 <i class="fa fa-search"></i>
                                 <p class="hidden-lg hidden-md">Search</p>
-                            </a>
+                            </a-->
+                            <div class="search-input search-input--icon-right">
+                                <form class="search" action="{% url 'search' %}" method='post'>
+                                {% csrf_token %}
+                              <input required="" class="form-control" value="{{query}}"type="search" name="search" id="searchInputX" placeholder="Search...">
+                              <button type='submit' class="search-input__btn">
+                                <svg class="icon" viewBox="0 0 24 24"><title>Search</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g></svg>
+                              </button>
+                          </form>
+                            </div>
                         </li>
                     </ul>
 
@@ -215,7 +289,7 @@
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.cryptolads.com">Cryptolads</a>, made with love for a better crypto sourse
+                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.cryptolads.com">{{crypto.site_name}}</a>, made with love for a better crypto sourse
                 </p>
             </div>
         </footer>

@@ -16,7 +16,6 @@ from dashboard.models import *
 import requests
 from django.core.mail import send_mail, BadHeaderError , EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
-from notifications.signals import notify
 import requests
 import json
 from posts.models import *
@@ -177,33 +176,33 @@ def events(request):
 	if request.method == "POST":
 		srch = request.POST["search"]
 		search = srch.upper()
-		 
-		urls = "https://api.coinmarketcal.com/v1/coins?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg"
+		
+		try: 
+			urls = "https://api.coinmarketcal.com/v1/coins?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg"
 
-		dat = requests.get(urls).json()
-
-		for s in dat:
-		        if search in s['symbol']:
-		                ids = s['id']
-		                url = "https://api.coinmarketcal.com/v1/events?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg&page=1&max=10&coins="+ids+"&sortBy=hot_events"
-
-		                data = requests.get(url).json()
-		                name = s['name']
-		                symbol = s['symbol']
+			dat = requests.get(urls).json()
+			
+			for s in dat:
+				if search in s['symbol']:
+					ids = s['id']
+					url = "https://api.coinmarketcal.com/v1/events?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg&page=1&max=10&coins="+ids+"&sortBy=hot_events"
+					data = requests.get(url).json()
+					name = s['name']
+					symbol = s['symbol']
 		                #for i in data:
 		                	#title = i["title"]
 		                    #	date = i["date_event"] 
 		                    #	source = i["source"]
 		                    #	dis = i["description"]
-
-		       	    	return render(request, "dashbord/event.html", {"crypto": crypt , "data": data, "name": name , 'sym': symbol, 'header': event})
-				 
-	messages.error(request, 'no events')
+					return render(request, "dashbord/event.html", {"crypto": crypt , "data": data, "name": name , 'sym': symbol, 'header': event})
+				else:
+					messages.error(request, 'no events for this coin')
+		except:
+			messages.error(request, '!this service is down, try again later.')
+			return render(request, "dashbord/event.html", {"crypto": crypt, 'header': event })
+						
+	messages.info(request, 'search for crypto events in searchbar.')
 	return render(request, "dashbord/event.html", {"crypto": crypt, 'header': event })
-
-
-
-
 
 
 
@@ -228,29 +227,30 @@ def marketcap(request , coin , i):
 			pass
 
 def coincap(request, coin , i):
+	try:		
+		url = "https://api.coinmarketcap.com/v2/ticker/"
 
-	url = "https://api.coinmarketcap.com/v2/ticker/"
+		raw_data = requests.get(url).json()
 
-	raw_data = requests.get(url).json()
+		data = raw_data['data']
 
-	data = raw_data['data']
-
-	for s in data:
-	     	sym = data[s]['symbol']
-	        if coin in sym:
-	        	ids = data[s]['id']
-	        	
-	        	if i.field_exists('coin_id'):
-		        		i.coin_id = ids
-	        			i.save()
-	        	else:
-	        		i.signal_id = ids
-	        		i.save()
-	        
-	        else:
-	        	pass
-
-
+		for s in data:
+		     	sym = data[s]['symbol']
+		        if coin in sym:
+		        	ids = data[s]['id']
+		        	
+		        	if i.field_exists('coin_id'):
+			        		i.coin_id = ids
+		        			i.save()
+		        	else:
+		        		i.signal_id = ids
+		        		i.save()
+		        
+		        else:
+		        	pass
+	except:
+		pass
+		
 #def posts(request):
 #	return render(request , "dashbord/posts.html", {})
 
