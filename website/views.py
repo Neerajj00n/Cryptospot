@@ -178,14 +178,14 @@ def events(request):
 		search = srch.upper()
 		
 		try: 
-			urls = "https://api.coinmarketcal.com/v1/coins?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg"
+			urls = "https://api.coinmarketcal.com/v1/coins?access_token=YTRjNGJiMDQ2MzdkMWI3MzEzYjc5ZDQwYjg1ODIxNmZkMmNkYjlhZmQ3YTU0M2ZkNTBkM2UxMjAxNmViNzBhMg"
 
 			dat = requests.get(urls).json()
 			
 			for s in dat:
 				if search in s['symbol']:
 					ids = s['id']
-					url = "https://api.coinmarketcal.com/v1/events?access_token=ZmEyMWVmNWM4ZTgzMDAwNjI5NmRkZGYzM2NlMGE5YWI3YzkzOGE4OTI0MWY2OTRhY2U2NjMwYjE0NzhhZDY2Yg&page=1&max=10&coins="+ids+"&sortBy=hot_events"
+					url = "https://api.coinmarketcal.com/v1/events?access_token=YTRjNGJiMDQ2MzdkMWI3MzEzYjc5ZDQwYjg1ODIxNmZkMmNkYjlhZmQ3YTU0M2ZkNTBkM2UxMjAxNmViNzBhMg&page=1&max=10&coins="+ids+"&sortBy=hot_events"
 					data = requests.get(url).json()
 					name = s['name']
 					symbol = s['symbol']
