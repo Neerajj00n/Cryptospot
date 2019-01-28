@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.contrib.auth.models import User
 from dashboard.models import * 
+from dashboard.models import Dashconf
 import requests
 from django.core.mail import send_mail, BadHeaderError , EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 

@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from dashboard.models import *
 from .models import *
 from dashboard.models import *
+from dashboard.models import Dashconf
 from django.db.models import Count
 from django.contrib.sites.shortcuts import get_current_site 
 from django.utils.encoding import force_bytes , force_text

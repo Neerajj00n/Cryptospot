@@ -15,7 +15,7 @@ class Dashconf(models.Model):
 	market_image = models.ImageField(upload_to="Banners", null=True, blank=True)
 
 	def __str__(self):
-		return self.coin
+		return self.site_name
 
 
 
