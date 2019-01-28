@@ -14,6 +14,10 @@ class Dashconf(models.Model):
 	site_name = models.CharField(max_length=300 , null=True, blank=True)
 	market_image = models.ImageField(upload_to="Banners", null=True, blank=True)
 
+	def __str__(self):
+		return self.coin
+
+
 
 class Exchange(models.Model):
 	name = models.CharField(max_length=30)

@@ -30,7 +30,7 @@ user = User.objects.all()
 
 
 def contact(request):
-	crypt = Dashconf.objects.get()
+	crypt = Dashconf.objects.get(pk=1)
 	con = "Contact us"
 	if request.method == 'POST':
 		firstname = request.POST['fname']
@@ -68,7 +68,7 @@ def contact(request):
 
 
 def dashbord(request):
-	crypt = get_object_or_404(Dashconf)
+	crypt = Dashconf.objects.get(pk=1)
 	signel = Signels.objects.all()
 	listing = Coin_listings.objects.all()
 	dash = "Dashboard"
@@ -93,7 +93,7 @@ def dashbord(request):
 
 
 def blogs(request):
-	crypt = Dashconf.objects.get()
+	crypt = Dashconf.objects.get(pk=1)
 	contact_list = Blog.objects.all()
 	pop_list = Blog.objects.all().order_by('-blog_views')
 	pop = contact_list[:3]
@@ -132,7 +132,7 @@ def my_blog(request, blog_slug):
 
 
 def airdrops(request):
-	crypt = Dashconf.objects.get()
+	crypt = Dashconf.objects.get(pk=1)
 	airdrop = Airdrop.objects.all()
 	air = "Airdrops"
 
@@ -149,7 +149,7 @@ def airdrop_single(request, airdrop_slug):
 
 
 def shoping(request):
-	crypt = Dashconf.objects.get()
+	crypt = Dashconf.objects.get(pk=1)
 	shop  = Shop.objects.all()
 	
 
@@ -159,7 +159,7 @@ def shoping(request):
 
 
 def faq(request):
-	crypt = Dashconf.objects.get()
+	crypt = Dashconf.objects.get(pk=1)
 	return render(request, "dashbord/FAQ.html", {"crypto": crypt})
 
 
@@ -170,7 +170,7 @@ def donate(request):
 	return render(request, "dashbord/donate.html", {})
 
 def events(request):
-	crypt = Dashconf.objects.get()
+	crypt = Dashconf.objects.get(pk=1)
 	event = "Coin events"
 
 	if request.method == "POST":
