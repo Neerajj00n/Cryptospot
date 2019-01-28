@@ -174,7 +174,7 @@ form > .button:hover {
                         <div class="searchbar">
                         <form id="Values" method="post" action="/events" >
                             {% csrf_token %}
-                          <input type="text" name="search" class="textbox" placeholder="Search with Coin symbol like BTC, ADA, etc" oninvalid="this.setCustomValidity('Symbol required')" required>
+                          <input type="text" value="{{srh}}" name="search" class="textbox" placeholder="Search with Coin symbol like BTC, ADA, etc" oninvalid="this.setCustomValidity('Symbol required')" required>
                           <input title="Search" value="" type="submit" class="button">
                         </form>
                         </div>

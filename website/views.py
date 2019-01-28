@@ -194,9 +194,8 @@ def events(request):
 		                    #	date = i["date_event"] 
 		                    #	source = i["source"]
 		                    #	dis = i["description"]
-					return render(request, "dashbord/event.html", {"crypto": crypt , "data": data, "name": name , 'sym': symbol, 'header': event})
-				else:
-					messages.error(request, 'no events for this coin')
+					return render(request, "dashbord/event.html", {"srh": search, "crypto": crypt , "data": data, "name": name , 'sym': symbol, 'header': event})
+	
 		except:
 			messages.error(request, '!this service is down, try again later.')
 			return render(request, "dashbord/event.html", {"crypto": crypt, 'header': event })

@@ -239,6 +239,7 @@ class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 			return True
 		return False
 
+@login_required
 def search(request):
 	dash = "search"
 	if request.method == "POST":
