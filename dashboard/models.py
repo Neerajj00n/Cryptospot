@@ -12,11 +12,7 @@ from slugify import slugify
 class Dashconf(models.Model):
 	sidebar_image = models.ImageField(upload_to="Banners", null=True, blank=True)
 	site_name = models.CharField(max_length=300 , null=True, blank=True)
-
-	market_status = models.CharField(max_length=300 , null=True, blank=True)
 	market_image = models.ImageField(upload_to="Banners", null=True, blank=True)
-
-
 
 
 class Exchange(models.Model):
