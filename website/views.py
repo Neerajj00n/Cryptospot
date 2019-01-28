@@ -69,7 +69,7 @@ def contact(request):
 
 
 def dashbord(request):
-	crypt = Dashconf.objects.get(pk=1)
+	crypt = Dashconf.objects.get()
 	signel = Signels.objects.all()
 	listing = Coin_listings.objects.all()
 	dash = "Dashboard"
