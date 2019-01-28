@@ -12,8 +12,8 @@ from blog.models import *
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.contrib.auth.models import User
-from dashboard.models import * 
-from dashboard.models import Dashconf
+from dashboard.models import *
+from dashboard.models import Dashconfig as Dashconf
 import requests
 from django.core.mail import send_mail, BadHeaderError , EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
@@ -31,7 +31,7 @@ user = User.objects.all()
 
 
 def contact(request):
-	crypt = Dashconf.objects.get(pk=1)
+	crypt = Dashconf.objects.get()
 	con = "Contact us"
 	if request.method == 'POST':
 		firstname = request.POST['fname']
@@ -94,7 +94,7 @@ def dashbord(request):
 
 
 def blogs(request):
-	crypt = Dashconf.objects.get(pk=1)
+	crypt = Dashconf.objects.get()
 	contact_list = Blog.objects.all()
 	pop_list = Blog.objects.all().order_by('-blog_views')
 	pop = contact_list[:3]
@@ -133,7 +133,7 @@ def my_blog(request, blog_slug):
 
 
 def airdrops(request):
-	crypt = Dashconf.objects.get(pk=1)
+	crypt = Dashconf.objects.get()
 	airdrop = Airdrop.objects.all()
 	air = "Airdrops"
 
@@ -150,7 +150,7 @@ def airdrop_single(request, airdrop_slug):
 
 
 def shoping(request):
-	crypt = Dashconf.objects.get(pk=1)
+	crypt = Dashconf.objects.get()
 	shop  = Shop.objects.all()
 	
 
@@ -160,7 +160,7 @@ def shoping(request):
 
 
 def faq(request):
-	crypt = Dashconf.objects.get(pk=1)
+	crypt = Dashconf.objects.get()
 	return render(request, "dashbord/FAQ.html", {"crypto": crypt})
 
 
@@ -171,7 +171,7 @@ def donate(request):
 	return render(request, "dashbord/donate.html", {})
 
 def events(request):
-	crypt = Dashconf.objects.get(pk=1)
+	crypt = Dashconf.objects.get()
 	event = "Coin events"
 
 	if request.method == "POST":

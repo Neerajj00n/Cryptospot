@@ -9,7 +9,8 @@ from slugify import slugify
 #from star_ratings.models import Rating
 
 # Create your models here
-class Dashconf(models.Model):
+
+class Dashconfig(models.Model):
 	sidebar_image = models.ImageField(upload_to="Banners", null=True, blank=True)
 	site_name = models.CharField(max_length=300 , null=True, blank=True)
 	market_image = models.ImageField(upload_to="Banners", null=True, blank=True)

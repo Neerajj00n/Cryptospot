@@ -12,10 +12,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse, HttpResponseRedirect , HttpResponseBadRequest
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from dashboard.models import *
+from dashboard.models import Dashconfig as Dashconf
 from .models import *
 from dashboard.models import *
-from dashboard.models import Dashconf
 from django.db.models import Count
 from django.contrib.sites.shortcuts import get_current_site 
 from django.utils.encoding import force_bytes , force_text
@@ -35,7 +34,7 @@ from django.views.generic import (
 
 
 crypt = Dashconf.objects.get(pk=1)
-
+print crypt
 crypto = {'crypto': crypt}
 wname = crypt.site_name
 
@@ -127,7 +126,7 @@ def activate(request, uidb64, token):
 
 @login_required
 def post(request):
-	crypt = Dashconf.objects.get(pk=1)
+	crypt = Dashconf.objects.get()
 	dash = "Posts"
 	user1 = request.user
 	signel = Signels.objects.filter(author__to_user__from_user=request.user)	
@@ -142,7 +141,7 @@ def post(request):
 @login_required
 def profile(request, username):
 	try:
-		crypt = Dashconf.objects.get(pk=1)
+		crypt = Dashconf.objects.get()
 		users = User.objects.get(username=username)
 		signel = Signels.objects.filter(author=users) 
 		dash = "Profile"
