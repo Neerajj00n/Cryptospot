@@ -13,7 +13,6 @@ from slugify import slugify
 class Dashconfig(models.Model):
 	sidebar_image = models.ImageField(upload_to="Banners", null=True, blank=True)
 	site_name = models.CharField(max_length=300 , null=True, blank=True)
-	market_image = models.ImageField(upload_to="Banners", null=True, blank=True)
 
 	def __str__(self):
 		return self.site_name
