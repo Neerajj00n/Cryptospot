@@ -26,7 +26,7 @@ SECRET_KEY = '42%*z+c1(4+4fqmsx(kuwoh9i_d(m=7^i4aqj@v6l^^bbrt8p)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cryptospot.herokuapp.com']
+ALLOWED_HOSTS = ['*']#['cryptospot.herokuapp.com']
 
 
 # Application definition
