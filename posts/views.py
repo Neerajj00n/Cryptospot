@@ -32,12 +32,6 @@ from django.views.generic import (
 )
 
 
-
-crypt = Dashconf.objects.get()
-
-crypto = {'crypto': crypt}
-wname = crypt.site_name
-
 def get_user(email):
     try:
         return User.objects.get(email=email.lower())
@@ -45,7 +39,8 @@ def get_user(email):
         return None
 
 def register(request):
-
+	crypt = Dashconf.objects.get()
+	wname = crypt.site_name
 	if request.method == "POST":
 
 		username = request.POST["susername"]
@@ -85,6 +80,7 @@ def auth_login(request):
 	if request.user.is_authenticated():
 		return redirect(post)
 	else:	
+		crypt = Dashconf.objects.get()
 		if request.method == "POST":
 			email = request.POST["username"]
 			password = request.POST["password"]
@@ -177,6 +173,7 @@ def unfollow(request, pk):
 
 @login_required
 def editProfile(request,username):
+	crypt = Dashconf.objects.get()
 	ids = request.user.id
 	user = User.objects.get(pk=ids)
 	if request.method == "POST":	
@@ -242,6 +239,7 @@ class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @login_required
 def search(request):
 	dash = "search"
+	crypt = Dashconf.objects.get()
 	if request.method == "POST":
 		query = request.POST['search']
 		
