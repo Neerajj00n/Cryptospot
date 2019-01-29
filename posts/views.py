@@ -45,7 +45,7 @@ def register(request):
 
 	if request.method == "POST":
 
-		username = request.POST["susername"]
+		username = request.POST["susername"].lower()
 		email =  request.POST["semail"].lower()
 		password = request.POST["spassword"]
 		password2 = request.POST["spassword2"]

@@ -38,6 +38,7 @@ class Signels(models.Model):
     created_at = models.DateTimeField(default=datetime.now,blank=True,null=True, editable=False)
     trade_time = models.CharField(max_length=100, null=True, blank=True)
     Exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE, null=True)
+    values_in = models.CharField(max_length=50 ,  null=True, choices=[('BTC', 'BTC'), ('USD', 'USD')])
     ups = models.IntegerField(default=0)
     down = models.IntegerField(default=0)
 
@@ -48,7 +49,7 @@ class Signels(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email_confirmed = models.BooleanField(default=False)
-    Propic = models.ImageField(upload_to="Banners/propics/", default="Banners/propics/default.png")
+    Propic = models.ImageField(upload_to="Banners/propics/", default="Banners/propics/boy.png")
     bio = models.TextField(max_length=500, blank=True)
     
     # other fields...
