@@ -15,12 +15,14 @@
   margin: 8px;
   min-width: 230px;
   max-width: 315px;
-  width: 100%;
+ /* width: 100%;*/
   font-size: 16px;
   background-color: #fff;
   color: #111;
   line-height: 1.2em;
   text-align: left;
+  border-radius: 3px;
+  padding: 2px;
 }
 
 .snip1583 *,
@@ -38,7 +40,7 @@
 }
 
 .snip1583 figcaption {
-  padding: 10px;
+  padding: 6px;
 }
 
 .snip1583 h3 {
@@ -52,6 +54,10 @@
   font-weight: 700;
   color: #4da3e2;
   font-size: 1.5rem;
+}
+
+figcaption {
+    background-color: rgba(0,0,0,.5);
 }
 
 .snip1583 .icons {
@@ -123,26 +129,21 @@ body {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Shop</h4>
-                                <p class="category">if we were able to help you somehow. you can say thank you by buying items from our affilate links </p>
-                      
-                            </div>
+                   
                             <div class="content">
                               {% for i in shop %}
                                 <figure class="snip1583">
                               <image src="{{i.itempic.url}}" alt="sample68" />
                               <div class="icons"><a href="{{i.item_url}}" target="_blank" ><i class="ion-android-cart"></i></a><a><i class="ion-android-star"></i></a><a><i class="ion-android-share-alt"></i></a></div>
                               <figcaption>
-                                <h3>{{ i.item_name }}</h3>
-                                <div class="price">{{ i.item_price }}</div>
+                                <h3><b>{{ i.item_name }}<b></h3>
+                                <div class="price">${{ i.item_price }}</div>
                               </figcaption>
                             </figure>
                             {% endfor %}
                             </div>
                         </div>
-                    </div>
+        
 
                 </div>
             </div>

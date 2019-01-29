@@ -11,8 +11,9 @@ from slugify import slugify
 # Create your models here
 
 class Dashconfig(models.Model):
-	sidebar_image = models.ImageField(upload_to="Banners", null=True, blank=True)
 	site_name = models.CharField(max_length=300 , null=True, blank=True)
+	sidebar_image = models.ImageField(upload_to="Banners", null=True, blank=True)
+	logo = models.ImageField(upload_to="Banners", null=True, blank=True)
 
 	def __str__(self):
 		return self.site_name
