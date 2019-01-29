@@ -198,7 +198,7 @@ def editProfile(request,username):
 class PostCreate(LoginRequiredMixin, CreateView):
 	model = Signels
 	success_url = '/posts'
-	fields = ['coin_name', 'symbol', 'title', 'buy', 'sell', 'stop_loss' , 'trade_time' , 'Exchange']
+	fields = ['coin_name', 'symbol', 'title', 'buy', 'sell', 'stop_loss' , 'trade_time' , 'Exchange', 'values_in']
 	
 	def form_valid(self, form):
 		form.instance.author = self.request.user
@@ -216,7 +216,7 @@ class PostCreate(LoginRequiredMixin, CreateView):
 class PostEdit(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Signels
 	success_url = '/posts'
-	fields = ['coin_name', 'symbol', 'title', 'buy', 'sell', 'stop_loss' , 'trade_time' , 'Exchange']
+	fields = ['coin_name', 'symbol', 'title', 'buy', 'sell', 'stop_loss' , 'trade_time' , 'Exchange', 'values_in']
 	
 	def form_valid(self, form):
 		form.instance.author = self.request.user
