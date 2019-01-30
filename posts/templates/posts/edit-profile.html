@@ -11,7 +11,7 @@
                                 <h4 class="title">Edit Profile</h4>
                             </div>
                             <div class="content">
-                                <form method="post" action="/profile">
+                                <form method="post" action="{% url 'profile-edit' user.username %}">
                                     {% csrf_token %} 
                                     <div class="row">
                                         <div class="col-md-5">
@@ -38,13 +38,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input type="text" class="form-control" placeholder="Company" value="{{ user.Firstname}}">
+                                                <input type="text" name='first' class="form-control" placeholder="Company" value="{{ user.first_name}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input type="text" class="form-control" placeholder="Last Name" value="{{ user.Lastname }}">
+                                                <input type="text" name="last" class="form-control" placeholder="Last Name" value="{{ user.last_name }}">
                                             </div>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="text" class="form-control" name="location" placeholder="Home Address" value="{{ user.profile.location }}">
+                                                <input type="text" name="twitter" name="BAddress" class="form-control" name="location" placeholder="BTC Address" value="{{ user.profile.BAddress }}">
                                             </div>
                                         </div>
                                     </div>
@@ -61,20 +61,20 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>City</label>
-                                                <input type="text" class="form-control" placeholder="City" value="Mike">
+                                                <label>Telegram</label>
+                                                <input type="text" name="telegram" class="form-control" placeholder="telegram username" value="{{ user.profile.telegram}}">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Country</label>
-                                                <input type="text" class="form-control" placeholder="Country" value="Andrew">
+                                                <label>Twitter</label>
+                                                <input type="text" name="twitter" class="form-control" placeholder="twitter username" value="{{ user.profile.twitter }}">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Postal Code</label>
-                                                <input type="number" class="form-control" placeholder="ZIP Code">
+                                                <label>contact email</label>
+                                                <input type="text" class="form-control" placeholder="ZIP Code">
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>About Me</label>
-                                                <textarea rows="5" class="form-control" placeholder="Here can be your description" name = "bio" value="Mike"> {{ user.profile.bio }} </textarea>
+                                                <textarea rows="5" class="form-control" placeholder="Here can be your description" name = "bio" value="{{ user.profile.bio }}s"> {{ user.profile.bio }} </textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@
                     <div class="col-md-4">
                         <div class="card card-user">
                             <div class="image">
-                                <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                                <img src="{% static 'website/cover.jpg' %}" alt="..."/>
                             </div>
                             <div class="content">
                                 <form method="post" action="/profile" enctype="multipart/form-data">
@@ -112,7 +112,7 @@
                                      <br>
                                      <button type="submit">Upload</button>
 
-                                      <h4 class="title">Mike Andrew<br />
+                                      <h4 class="title">{{user.first_name}}&nbsp;{{user.last_name}}<br />
                                          <small>{{user.username}}</small>
                                       </h4>
                                     </a>

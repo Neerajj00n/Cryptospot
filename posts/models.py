@@ -50,6 +50,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email_confirmed = models.BooleanField(default=False)
     Propic = models.ImageField(upload_to="Banners/propics/", default="Banners/propics/boy.png")
+    telegram = models.CharField(max_length=50 , null=True, blank=True)
+    twitter = models.CharField(max_length=50 , null=True, blank=True)
     bio = models.TextField(max_length=500, blank=True)
     
     # other fields...

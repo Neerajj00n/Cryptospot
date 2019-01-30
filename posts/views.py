@@ -179,17 +179,30 @@ def editProfile(request,username):
 	ids = request.user.id
 	user = User.objects.get(pk=ids)
 	if request.method == "POST":	
-		if "bio" in request.POST:
-
-			bio = request.POST["bio"]	
-			user.profile.bio = bio 
-			user.profile.save()
-
-		elif "image" in request.FILES:
-			
+		
+		if "image" in request.FILES:
 			image = request.FILES['image'] 	
 			user.profile.Propic.save(image.name , image)
+			
+		else:
+			bio = request.POST["bio"]
+			first = request.POST["first"]
+			last = request.POST["last"]
+			Twitter = request.POST["twitter"]
+			Telegram = request.POST["telegram"]
+			print last
+			print Twitter
 
+			user.first_name = first
+			user.last_name = last
+			user.profile.twitter = Twitter
+			user.profile.telegram = Telegram
+			user.profile.bio = bio 
+			user.profile.save()
+			user.save()
+ 
+			
+			
 	return	render(request, 'posts/edit-profile.html', {"crypto": crypt , 'user' : user})
 
 	

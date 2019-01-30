@@ -63,7 +63,7 @@ vr{
                     <div class="col-md-4">
                         <div class="card card-user">
                             <div class="image">
-                                <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                                <img src="{% static 'website/cover.jpg' %}" alt="..."/>
                             </div>
                             <div class="content" >
                                 <form method="post" action="/profile" enctype="multipart/form-data">
@@ -72,7 +72,7 @@ vr{
                                      <a href="#">
                                     <img class="avatar border-gray" src="{{ user.profile.Propic.url }}" alt="..."/>
 
-                                      <h4 class="title">Mike Andrew<br />
+                                      <h4 class="title">{{user.first_name}}&nbsp;{{user.last_name}}<br />
                                          <small>@{{user.username}}</small>
                                       </h4>
                                     </a>
