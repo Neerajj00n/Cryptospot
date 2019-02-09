@@ -210,6 +210,7 @@ def editProfile(request,username):
 
 class PostCreate(LoginRequiredMixin, CreateView):
 	model = Signels
+	extra_context = None
 	success_url = '/posts'
 	fields = ['coin_name', 'symbol', 'title', 'buy', 'sell', 'stop_loss' , 'trade_time' , 'Exchange', 'values_in']
 	
@@ -225,6 +226,12 @@ class PostCreate(LoginRequiredMixin, CreateView):
 			else:
 				pass
 
+	def get_context_data(self, **kwargs):
+		kwargs.setdefault('view', self)
+		context = super(PostCreate, self).get_context_data(**kwargs)
+		context['crypto'] = Dashconf.objects.get()
+		context['header'] = 'Create signel'
+		return context
 
 class PostEdit(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Signels
@@ -241,6 +248,13 @@ class PostEdit(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 			return True
 		return False
 
+	def get_context_data(self, **kwargs):
+		kwargs.setdefault('view', self)
+		context = super(PostCreate, self).get_context_data(**kwargs)
+		context['crypto'] = Dashconf.objects.get()
+		context['header'] = 'Edit signel'
+		return context
+
 class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 	model = Signels
 	success_url = '/posts'
@@ -250,6 +264,13 @@ class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 		if self.request.user == post.author:
 			return True
 		return False
+
+	def get_context_data(self, **kwargs):
+		kwargs.setdefault('view', self)
+		context = super(PostCreate, self).get_context_data(**kwargs)
+		context['crypto'] = Dashconf.objects.get()
+		context['header'] = 'Delete signel'
+		return context
 
 @login_required
 def search(request):

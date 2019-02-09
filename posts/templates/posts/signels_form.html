@@ -2,16 +2,13 @@
 {% load crispy_forms_tags %}
 {% block content %}
 {% load static %}
-<head>
-   
-
-</head>
 
 <div class="content">
 	<div class="container-fluid">
     <form method="POST">
+        <div class="form-group col-md-6">
     	{% csrf_token %}
-    	<fieldset class="form_group">
+    	<fieldset class="form_group ">
     		<legend class="border-bottom mb-4">create signel</legend>
             <div class="form-group">
     		{{ form|crispy }}
@@ -19,6 +16,7 @@
     	</fieldset>
     	<div class="form_group">
     		<button class="btn btn-outline-info" type="submit">Post</button>
+    </div>
     </form>
 
     </div>
