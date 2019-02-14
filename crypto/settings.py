@@ -26,7 +26,7 @@ SECRET_KEY = '42%*z+c1(4+4fqmsx(kuwoh9i_d(m=7^i4aqj@v6l^^bbrt8p)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =['*']# ['cryptospot.herokuapp.com']
+ALLOWED_HOSTS =['cryptospot.herokuapp.com']# ['cryptospot.herokuapp.com']
 
 
 # Application definition
@@ -177,3 +177,6 @@ MESSAGE_TAGS = {
 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
+
+
+DEBUG = False
