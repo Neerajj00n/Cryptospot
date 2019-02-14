@@ -151,7 +151,7 @@ def profile(request, username):
 		
 		return render(request, 'posts/profile.html', {'followers_count': followers_count, 'list_count': list_count, 'follower_list': follower_list, "user": users, "crypto": crypt , "signels" : reversed(signel), "header": dash })
 	except:
-		return HttpResponse("hello")
+		return HttpResponse("404")
 
 @login_required
 def follow(request, pk):
@@ -235,6 +235,7 @@ class PostCreate(LoginRequiredMixin, CreateView):
 
 class PostEdit(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Signels
+	extra_context = None
 	success_url = '/posts'
 	fields = ['coin_name', 'symbol', 'title', 'buy', 'sell', 'stop_loss' , 'trade_time' , 'Exchange', 'values_in']
 	
@@ -257,6 +258,7 @@ class PostEdit(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 	model = Signels
+	extra_context = None
 	success_url = '/posts'
 
 	def test_func(self):

@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     'dashboard',
     'blog',
     'posts',
+    'snippets',
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
