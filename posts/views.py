@@ -60,16 +60,8 @@ def register(request):
 				user = User.objects.create_user(username=username, email=email)
 				user.set_password(password)
 				user.save()
-				current_site = get_current_site(request)
-				subject = 'Activate Your {} Account'.format(wname)
-				message = render_to_string('posts/account_activation_email.html', {
-				'user': user,
-                		'domain': current_site.domain,
-                		'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                		'token': account_activation_token.make_token(user),
-            			})
-            			user.email_user(subject, message)
-				messages.success(request, "user created. now Activate it from your email")
+	
+				messages.success(request, "user created.")
 			else:
 				messages.error(request, "Looks like user already exists")
 
@@ -92,21 +84,16 @@ def auth_login(request):
 			user = authenticate(username=username , password=password)
 			
 			if user is not None:			
-				if user.profile.email_confirmed:	
-					login(request, user)
+				login(request, user)
 
-					return HttpResponseRedirect('post')
-				else:
-					messages.info(request , "email is not confirmed.")	
+				return HttpResponseRedirect('post')
 			else:
 				messages.error(request , "password yesn't match")
-
-#				messages.error(request, "login fail plz check ur password or email again")
 
 
 	return render(request, 'posts/login.html', {"crypto": crypt})
 
-
+"""
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -122,6 +109,8 @@ def activate(request, uidb64, token):
         return redirect(post)
     else:
         return render(request, 'posts/account_activation_invalid.html')
+"""
+
 
 @login_required
 def post(request):
@@ -282,10 +271,11 @@ def search(request):
 		query = request.POST['search']
 		
 		
-		users = User.objects.get(username=query)
+		users = User.objects.filter(username__icontains=query)
 		current_user = request.user
-		follower_list = users.profile.get_following(current_user)
-		return render(request, 'posts/search.html' ,{'follower_list': follower_list, "crypto": crypt, "users": users, 'query': query, "header": dash})
+		follower_list = current_user.profile.get_following(current_user)
+		
+		return render(request, 'posts/search.html' ,{ 'follower_list': follower_list, "crypto": crypt, "users": users, 'query': query, "header": dash})
 		
 		#except:
 		#	print 'found nothing'
@@ -293,6 +283,51 @@ def search(request):
 		#	return render(request, 'posts/search.html' ,{"crypto": crypt, "header": dash, 'query': query })		
 
 
+
+def upvote(request, pk):
+	item = Signels.objects.get(pk=pk)
+	ids = item.id
+	
+	if request.user in item.dislike.all():
+		item.dislike.remove(request.user)
+		item.like.add(request.user)
+		item.save()
+
+	elif not request.user in item.like.all():
+		item.like.add(request.user)
+		item.save()
+
+	else:
+		item.like.remove(request.user)
+		item.save()
+	return redirect(request.META['HTTP_REFERER'])
+
+def downvote(request, pk):
+	item = Signels.objects.get(pk=pk)
+	ids = item.id
+	
+	if request.user in item.like.all():
+		item.like.remove(request.user)
+		item.dislike.add(request.user)
+		item.save()
+
+	elif not request.user in item.dislike.all():
+		item.dislike.add(request.user)
+		item.save()
+
+	else:
+		item.dislike.remove(request.user)
+		item.save()
+	return redirect(request.META['HTTP_REFERER'])
+
+
+
 def logout_view(request, username):
 	logout(request)
 	return redirect(auth_login)	
+
+
+
+
+
+

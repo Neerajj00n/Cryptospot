@@ -4,10 +4,12 @@
 <style type="text/css">
 
 .pro-card {
-    display: -webkit-box;
+    margin-left: 2%;
+    width: 70%;
+    display: inline-block;
 }
 .srch {
-    margin-left: 40%;
+    float: right;
 }
 
 .bio{
@@ -37,25 +39,25 @@
 			                      {{ message }}
 			                </div>
 			              {% endfor %}
-                		
+                		      {% for user in users %}
                             <div class="content1">
                                 <div class="pro-card">
-                                   <img height="50" width="50" src="{{users.profile.Propic.url}}"></li>
-                                   <a href="/{{users.username}}"><b>{{users.username}}</b></a>
+                                   <img height="50" width="50" src="{{user.profile.Propic.url}}"></li>
+                                   <a href="/{{user.username}}"><b>{{user.username}}</b></a>
                                    <br>
-                                   <div class="bio"><super> bio: {{users.profile.bio}}</super></div>
+                                   <div class="bio"><super> bio: {{user.profile.bio}}</super></div>
                                    
                                    
                                    <div class="srch">
-                                   <a class="btn opro" type="button" href="/{{users.username}}">view profile</a>
+                                   <a class="btn opro" type="button" href="/{{user.username}}">view profile</a>
 
-                                   {% if request.user != users %}
-                                    {% if not users in follower_list %}
-                                        <a href="{% url 'follow' pk=users.pk %}"
+                                   {% if request.user != user %}
+                                    {% if not user in follower_list %}
+                                        <a href="{% url 'follow' pk=user.pk %}"
                                          type="button" class="btn btn-success">follow
                                         </a>
                                     {% else %}
-                                        <a href="{% url 'unfollow' pk=users.pk %}"
+                                        <a href="{% url 'unfollow' pk=user.pk %}"
                                          type="button" class="btn btn-default">unfollow</a>
 
                                     {% endif %}
@@ -66,7 +68,7 @@
                             </div>    
                        
                         <hr>
-
+                        {% endfor %}
                         </div>
                         </div>           
          		</div>

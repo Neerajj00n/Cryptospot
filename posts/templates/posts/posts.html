@@ -1,4 +1,38 @@
 {% load static %}
+
+<style type="text/css">
+   .vote-up {
+      
+      display: inline-block;
+      overflow: hidden;
+      width: 34px;
+      height: 29px;
+      cursor: pointer;
+}
+
+
+.vote-down{
+    
+      display: inline-block;
+      overflow: hidden;
+      width: 34px;
+      height: 29px;
+      cursor: pointer;
+}
+
+.vote-buttons {
+    display: grid;
+    float: right;
+} 
+
+.coinmarketcap-currency-widget {
+    width: 90%;
+}
+
+span.count {
+    margin-left: 12px;
+}
+</style>
 <div class="col-md-8">
                         {% for i in signels %} 
 
@@ -17,8 +51,10 @@
                                             <i class="pe-7s-angle-down-circle"></i>
                                             </a>
                                             <ul class="dropdown-menu">
-                                                <li><a href="{% url 'post-edit' i.id %}">Edit</a></li>
-                                                <li><a href="{% url 'post-delete' i.id %}">Delete</a></li>
+                                              {% if request.user == i.author %}
+                                                <li><a href="">Edit</a></li>
+                                                <li><a href="">Delete</a></li>
+                                              {% endif %}  
                                                 <li><a class="dropdown-item disabled"  href="#">share</a></li>
                                                 
                                             </ul>
@@ -26,12 +62,37 @@
                                         </ul>
 
                                     </div>
-                                </div>
+                                    </div>
+                        
+                    
                                     <p class="category">{{i.title}} </p>
                                     <p class="category"><b>{{i.coin_name}}({{i.symbol}})</b></p>
                                     
                                 </div>
-                        
+
+                             <div class="vote-buttons">
+                              <span>
+                                <a href="{% url 'upvote' i.id %}">  
+                                {% if not request.user in i.like.all %}
+                               <img class="pe-7s-rocket vote-up" src = "{% static 'website/notUpvoted.png' %}" title="Upvote" /> </a>
+                               {% else %}
+                                <img class="vote-up selected" src = "{% static 'website/Upvote.png' %}" title="Voted" /></a>
+                                {% endif %}
+                               
+                            </span>
+                            <span class="count">{{i.Total}}</span>
+                            <span>
+
+                                <a href="{% url 'downvote' i.id %}">
+                                {% if not request.user in i.dislike.all %}
+                                <img class="pe-7s-like2 vote-down" src = "{% static 'website/Down.png' %}" title="DownVote" /></a>
+                                {% else %}
+                                <img class="vote-down selected" src = "{% static 'website/Downvoted.png' %}" title="DownVote" /></a>
+                                {% endif %}
+                             
+                             </span>
+                            
+                            </div>
                                 <script type="text/javascript" src="{% static 'dashboard/currency.js' %}"></script><div class="coinmarketcap-currency-widget" data-currencyid="{{ i.signal_id }}" data-base="{{i.values_in}}" data-secondary="" data-ticker="false" data-rank="false" data-marketcap="false" data-volume="false" data-stats="USD" data-statsticker="false"></div>
 
                                 <div class="footer" id="legend">

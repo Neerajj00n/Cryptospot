@@ -170,11 +170,11 @@ input#searchInputX {
                 <li class="active-pro">
                  {% if request.user.is_authenticated %}   
                     <a href="{% url 'logout_view' request.user.username %}">
-                        <i class="pe-7s-rocket"></i>
+                        <i class="pe-7s-delete-user"></i>
                         <p>logout</p>
                     {% else %}
                     <a href="{% url 'auth_login' %}">
-                        <i class="pe-7s-rocket"></i>
+                        <i class="pe-7s-user-female"></i>
                         <p>login/signup</p>
                     {% endif %}
                     </a>

@@ -39,11 +39,20 @@ class Signels(models.Model):
     trade_time = models.CharField(max_length=100, null=True, blank=True)
     Exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE, null=True)
     values_in = models.CharField(max_length=50 ,  null=True, choices=[('BTC', 'BTC'), ('USD', 'USD')])
-    ups = models.IntegerField(default=0)
-    down = models.IntegerField(default=0)
+    like = models.ManyToManyField(User, blank=True, related_name='user_liked')
+    dislike = models.ManyToManyField(User, blank=True, related_name='user_disliked')
+
 
     def __str__(self):
         return str(self.coin_name)
+
+    @property
+    def Total(self):
+        ups = self.like.count()
+        down = self.dislike.count()
+        return ups - down
+
+
 
 
 class Profile(models.Model):
