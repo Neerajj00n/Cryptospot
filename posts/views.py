@@ -179,9 +179,7 @@ def editProfile(request,username):
 			last = request.POST["last"]
 			Twitter = request.POST["twitter"]
 			Telegram = request.POST["telegram"]
-			print last
-			print Twitter
-
+		
 			user.first_name = first
 			user.last_name = last
 			user.profile.twitter = Twitter
