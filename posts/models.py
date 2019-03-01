@@ -102,27 +102,6 @@ class Follow(models.Model):
 
 
 
-
-
-
-#    user = models.ForeignKey(User, related_name='owner', null=True)
-#    Following = models.ManyToManyField(User)
-    
-
-
-#class Relationship(models.Model):
- #   from_user = models.ForeignKey(Profile, related_name="user_who_is_following")
-  #  to_user = models.ForeignKey(Profile, related_name="user_who_is_being_followed")
-
-#class Follow(models.Model):
-#    Followed = models.ForeignKey(Profile, related_name='originalUserWhoIsBeingFollowed')
-#    Following = models.ForeignKey(Profile, related_name='theUserWhoIsFollowing')
-
- #   def __str__(self):
- #       return self.Following.user.username + " -> " + self.Followed.user.username
-
-
-
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
     if created:
