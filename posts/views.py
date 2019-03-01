@@ -166,6 +166,7 @@ def unfollow(request, pk):
 def editProfile(request,username):
 	crypt = Dashconf.objects.get()
 	ids = request.user.id
+	dash = "Profile Edit"
 	user = User.objects.get(pk=ids)
 	if request.method == "POST":	
 		
@@ -190,7 +191,7 @@ def editProfile(request,username):
  
 			
 			
-	return	render(request, 'posts/edit-profile.html', {"crypto": crypt , 'user' : user})
+	return	render(request, 'posts/edit-profile.html', {"crypto": crypt , 'user' : user, "header": dash})
 
 	
    	

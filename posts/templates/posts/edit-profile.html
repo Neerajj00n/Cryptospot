@@ -2,6 +2,80 @@
 {% block content %}
 {% load static %}
 
+<style type="text/css">
+#profile-upload{
+    display: inline-block;
+    background-image:url({{ user.profile.Propic.url }});
+    background-size:cover;
+    background-position: center;
+    height: 120px; width: 120px;
+    border: 4px solid #bbb;
+    position:relative;
+  border-radius:100px;
+  overflow:hidden;
+}
+#profile-upload:hover input.upload{
+  display:block;
+}
+#profile-upload:hover .hvr-profile-img{
+  display:inline-block;
+ }
+#profile-upload .fa{   margin: auto;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    text-align: center;
+    right: 0;
+    padding: 6px;
+   opacity:1;
+  transition:opacity 1s linear;
+   -webkit-transform: scale(.75); 
+    color: white;
+ 
+}
+#profile-upload:hover .fa{
+   opacity:1;
+   -webkit-transform: scale(1); 
+}
+#profile-upload input.upload {
+    z-index:1;
+    left: 0;
+    margin: 0;
+    bottom: 0;
+    top: 0;
+    padding: 0;
+    opacity: 0;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    background:#ccc;
+    width:100%;
+    display:none;
+}
+
+#profile-upload .hvr-profile-img {
+  width:100%;
+  height:100%;
+  display: none;
+  position:absolute;
+  vertical-align: middle;
+  position: relative;
+  background: transparent;
+ }
+#profile-upload .fa:after {
+    content: "";
+    position:absolute;
+    bottom:0; left:0;
+    width:100%; height:0px;
+    background:rgba(0,0,0,0.3);
+    z-index:-1;
+    transition: height 0.3s;
+    }
+
+#profile-upload:hover .fa:after { height:100%; }
+    
+</style>
+
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -23,7 +97,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input type="text" class="form-control" placeholder="Username" value={{ user.username }}>
+                                                <input  disabled type="text" class="form-control" placeholder="Username" value={{ user.username }}>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -52,7 +126,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Address</label>
+                                                <label>BTC Address</label>
                                                 <input type="text" name="twitter" name="BAddress" class="form-control" name="location" placeholder="BTC Address" value="{{ user.profile.BAddress }}">
                                             </div>
                                         </div>
@@ -103,15 +177,17 @@
                                 <form method="post" action="/profile" enctype="multipart/form-data">
                                     {% csrf_token %}
                                 <div class="author">
-                                     
-                                    <img class="avatar border-gray" src="{{ user.profile.Propic.url }}" alt="..."/>
-                                    <div class="upload-button">
-                                        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-                                    </div>
-                                     <input class="file-upload" type="file" name="image" accept="image/*" >
-                                     <br>
+                                   <div id='profile-upload'>
+
+                                    <div class="hvr-profile-img">
+                                    <input type="file" name="logo" id='getval'  class="upload w180" title="Dimensions 180 X 180" id="imag"></div>
+                                      <i class="fa fa-camera"></i>
+                                      </div>  
+                                           <br>
                                      <button type="submit">Upload</button>
 
+                                     <br>
+                                     &nbsp;
                                       <h4 class="title">{{user.first_name}}&nbsp;{{user.last_name}}<br />
                                          <small>{{user.username}}</small>
                                       </h4>

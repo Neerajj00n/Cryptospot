@@ -172,6 +172,8 @@ def donate(request):
 
 def events(request):
 	crypt = Dashconf.objects.get()
+	key = crypt.event_key
+
 	event = "Coin events"
 
 	if request.method == "POST":
@@ -179,14 +181,14 @@ def events(request):
 		search = srch.upper()
 		
 		try: 
-			urls = "https://api.coinmarketcal.com/v1/coins?access_token=YTRjNGJiMDQ2MzdkMWI3MzEzYjc5ZDQwYjg1ODIxNmZkMmNkYjlhZmQ3YTU0M2ZkNTBkM2UxMjAxNmViNzBhMg"
+			urls = "https://api.coinmarketcal.com/v1/coins?access_token={}".format(key)
 
 			dat = requests.get(urls).json()
 			
 			for s in dat:
 				if search in s['symbol']:
 					ids = s['id']
-					url = "https://api.coinmarketcal.com/v1/events?access_token=YTRjNGJiMDQ2MzdkMWI3MzEzYjc5ZDQwYjg1ODIxNmZkMmNkYjlhZmQ3YTU0M2ZkNTBkM2UxMjAxNmViNzBhMg&page=1&max=10&coins="+ids+"&sortBy=hot_events"
+					url = "https://api.coinmarketcal.com/v1/events?access_token={}&page=1&max=10&coins={}&sortBy=hot_events".format(key , ids)
 					data = requests.get(url).json()
 					name = s['name']
 					symbol = s['symbol']
